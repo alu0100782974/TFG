@@ -1,0 +1,37 @@
+page-login {
+
+    .scroll-content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .form{
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        background: #000;
+        color: #F5F5F5;
+        justify-content: center;
+        border-radius: 10px;
+        
+        input{
+            width: 100%;
+            margin: 0 0 10px 0;
+            color: #000;
+        }
+
+        button{
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background: #2ecc71;
+        }
+
+        .login-button{
+            color: #F5F5F5;
+            font-weight: bold;
+        }
+    }
+}

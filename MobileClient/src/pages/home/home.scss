@@ -1,0 +1,118 @@
+page-home {
+    .leaflet-control-container .leaflet-routing-container-hide {
+        display: none;
+    }
+
+    .scroll-content{
+        overflow: hidden;
+        padding-top: 0px !important;
+
+    }
+
+    .buttons-wrapper{
+        padding: 10px;
+        background: #000;
+        box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
+
+        #connect-button{
+            border: 5px solid green;
+        }
+        
+        #end-button{
+            border: 5px solid red;
+        }
+
+        .connection-buttons{
+            display: flex;
+            flex-direction: column;
+
+            div{
+                display: flex;
+                flex-direction: row;
+            }
+        }
+
+        .menu-buttons{
+            display: flex;
+            flex-direction: column;
+
+            div{
+                display: flex;
+            }
+
+            button::last-child{
+                margin: 0 !important;
+            }
+        }
+
+        .info-wrapper{
+            color: #F5F5F5;
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 10.5px;
+            span{
+                width: 50%;
+            }
+        }
+
+        button{
+            padding: 5px;
+            border-radius: 2px;
+            margin: 0 5px 5px 0;
+            width: 100%;
+
+            &:last-child{
+                margin: 0 0 5px 0;
+            }
+        }
+    }
+
+    #map {
+        width: 100%;
+        height: 75%;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        z-index: -1;
+    }
+
+    next-client {
+        position: absolute;
+        bottom: 65px;
+        right: 5px;
+        z-index: 9999999;
+        border: 1px solid;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    menu {
+        z-index: 999;
+        position: absolute;
+        bottom: 0;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.over{
+    position: relative;
+    top: 110px;
+    left: 660px;
+    z-index: 9999999;
+}
+
+
+.leaflet-shadow-pane img{
+    display: none;
+}
+
+.leaflet-top .leaflet-control {
+    margin-top: 95px !important;
+    display: none;
+}
+
+.scroll-content::-webkit-scrollbar {
+    display: none;
+}

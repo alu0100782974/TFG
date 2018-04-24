@@ -1,0 +1,62 @@
+<div>
+  <div class="buttons-wrapper menu-buttons">
+    <button (click)="getClientsServed()">Clients attended</button>
+    <button (click)="getClientsToServe()">Clients to attend</button>
+    <button (click)="getLocations()">My tracking</button>
+  </div>
+</div>
+
+<p-dialog header="Services" [draggable]="false" [(visible)]="display">
+  <p-scrollPanel [style]="{height: '200px'}">
+    <table class="table" border="1">
+      <thead>
+        <th>Client</th>
+        <th>Start</th>
+        <th>Finish</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of services">
+          <td>{{ s.clientId }}</td>
+          <td>{{ s.start | date: 'HH:mm:ss' }}</td>
+          <td>{{ s.end | date: 'HH:mm:ss' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-scrollPanel>
+</p-dialog>
+
+<p-dialog header="Tracking" [draggable]="false" [(visible)]="display2">
+  <p-scrollPanel [style]="{height: '200px'}">
+    <table class="table" border="1">
+      <thead>
+        <th>Latitude</th>
+        <th>Longitude</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let l of locations ">
+          <td>{{ l.lat }}</td>
+          <td>{{ l.lon }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-scrollPanel>
+</p-dialog>
+
+<p-dialog header="Clients to serve" [draggable]="false" [(visible)]="display3">
+  <p-scrollPanel [style]="{height: '200px'}">
+    <table class="table" border="1">
+      <thead>
+        <th>ClientId</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let l of clientsToAttend ">
+          <td>{{ l.id }}</td>
+          <td>{{ l.lat }}</td>
+          <td>{{ l.lon }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </p-scrollPanel>
+</p-dialog>

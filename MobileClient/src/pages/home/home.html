@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="buttons-wrapper">
+
+    <div *ngIf="!connected" class="connection-buttons">
+      <button id="connect-button" [disabled]="connect" (click)="connectToServer()">Connect</button>
+      <div>
+        <button [disabled]="show" (click)="showMyRoute()">Show my route</button>
+        <button [disabled]="start" (click)="startRoute()">Start Route</button>
+      </div>
+    </div>
+
+    <div *ngIf="!!connected" class="menu-buttons">
+      <div>
+        <button [disabled]="next" (click)="goToNextClient()">To next client</button>
+        <button [disabled]="serve" (click)="startService()">Serve</button>
+        <button [disabled]="served" (click)="endService()">Client Served</button>
+      </div>
+      <button id="end-button" [disabled]="end" (click)="endSimulation()">End Route</button>
+      <div class="info-wrapper">
+        <span> Start: {{ timeStart | date: 'mediumTime' }}</span>
+        <!-- <span> Finish: {{ timeEnd | date: 'mediumTime' }}</span> -->
+        <span> Crono: {{ timer }}s</span>
+        <span> Truck distance: {{ actualDistance }} m</span>
+        <span> Route distance: {{ totalDistance }} m</span>
+
+      </div>
+    </div>
+
+  </div>
+  <div id="map">
+    <next-client [nextClient]="nextClient" *ngIf="!!connected"></next-client>
+  </div>
+
+  <div *ngIf="!!connected">
+    <menu></menu>
+  </div>
+
+</ion-content>

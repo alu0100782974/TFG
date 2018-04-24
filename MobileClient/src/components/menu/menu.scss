@@ -1,0 +1,27 @@
+
+menu {
+
+    .ui-dialog{
+        width: 100%;
+    }
+    
+    .ui-scrollpanel-bar-x{
+        display: none;
+    }
+    .table{
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-buttons{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 0px;
+    }
+    // .table-container{
+    //     height: 200px;
+    //     overflow: hidden;
+    // }
+
+}
+

@@ -1,0 +1,51 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+
+  <ion-navbar>
+    <ion-title>Login Page</ion-title>
+  </ion-navbar>
+
+</ion-header> -->
+
+
+<ion-content padding>
+
+  <br>
+  <div class="form">
+    <form class="ui-g-12 form-group" #bookForm="ngForm">
+
+      <div class="form-group">
+        <label for="usuario">Usuario/Camión</label>
+        <input class="form-control" type="number" [(ngModel)]="userId" name="truck" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input class="form-control" type="password" [(ngModel)]="passwd" name="Password" required>
+
+      </div>
+      <div class="form-group">
+        <label for="server">Servidor</label>
+        <input class="form-control" type="text" [(ngModel)]="serverId" name="Server" required>
+      </div>
+
+      <div class="form-group">
+        <label for="server">Puerto Websocket</label>
+        <input class="form-control" type="text" [(ngModel)]="port1" name="port1" required>
+      </div>
+
+      <div class="form-group">
+        <label for="server">Puerto API REST</label>
+        <input class="form-control" type="text" [(ngModel)]="port2" name="port2" required>
+      </div>
+      <button class="login-button" [disabled]="!bookForm.form.valid" (click)="pushParams()">Login</button>
+    </form>
+  </div>
+  <br>
+
+</ion-content>
