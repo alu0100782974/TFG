@@ -2,15 +2,16 @@
 
   <div class="select-client">
     <label class="show-label">Select truck:</label>
-    <p-dropdown [(options)]="trucks" [(ngModel)]="selectedTruck" (onChange)="selectTruck($event)" optionLabel="id" placeholder="Select Truck">
+    <p-dropdown [(options)]="trucks" [(ngModel)]="selectedTruck" (onChange)="selectTruck($event)" optionLabel="id" placeholder="Select Truck"
+      size="10">
     </p-dropdown>
     <label class="show-label">Select client to add:</label>
     <p-dropdown [(options)]="comboClients" [(ngModel)]="selectedClient" (click)="updateClients()" (onChange)="selectClient($event)"
-      optionLabel="id" placeholder="Select Client">
+      optionLabel="id" placeholder="Select Client" size="10">
     </p-dropdown>
 
     <label class="show-label">Select order:</label>
-    <p-spinner name="order" size="30" [disabled]=" (!selectedTruck || !selectedClient) || tableClients.length <= 0" [(ngModel)]="orderValue"
+    <p-spinner name="order" size="10" [disabled]=" (!selectedTruck || !selectedClient) || tableClients.length <= 0" [(ngModel)]="orderValue"
       [min]="firstNoServing" [max]="tableClients.length+1"></p-spinner>
 
     <button [disabled]="!selectedTruck || !selectedClient || (!orderValue && tableClients.length > 0)" type="button" pButton

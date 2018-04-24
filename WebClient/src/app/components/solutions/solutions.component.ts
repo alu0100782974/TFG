@@ -135,12 +135,17 @@ export class SolutionsComponent implements OnInit {
   }
 
   selectTruck(t) {
+
+    this.orderValue = undefined;
+
     this.clientsService.getClientsByTruckId(t.value.id).subscribe(c => {
       this.tableClients = c;
     });
   }
 
   selectClient(c) {
+    this.orderValue = undefined;
+
     this.clientsService.getClientsByTruckId(this.selectedTruck.id).subscribe(cli => {
       this.tableClients = cli;
       // poner if
