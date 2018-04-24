@@ -1,0 +1,12 @@
+<div id="map-container">
+    <div class="options">
+        <div class="options-group">
+            <label class="show-label">Show truck:</label>
+            <p-dropdown [options]="trucks" [(ngModel)]="selectedTruck" (onChange)="selectTruck($event)" optionLabel="id" placeholder="Select a Truck">
+            </p-dropdown>
+            <span class="v-separator">|</span>
+            <button pButton type="button" (click)="showAll()" label="Show All"></button>
+        </div>
+    </div>
+    <div id="map"></div>
+</div>

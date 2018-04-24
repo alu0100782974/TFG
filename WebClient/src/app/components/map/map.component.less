@@ -1,0 +1,38 @@
+#map-container{
+    height: 90%;
+
+    #map {
+        height: 75%;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        border-width: 5px;
+        border-style: outset;
+        
+        .leaflet-control-container .leaflet-routing-container-hide {
+            display: none;
+        }
+
+    }
+
+    .options{
+        display: flex;
+        margin: 0 0 10px 0;
+        
+        .options-group{
+            display: flex;
+            align-items: center;
+
+            .show-label{
+                margin: 0 10px 0 0;
+            }
+
+            .v-separator{
+                margin: 0 10px 0 10px;
+            }
+        }
+    }
+}

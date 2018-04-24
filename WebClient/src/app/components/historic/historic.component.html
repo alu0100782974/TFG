@@ -1,0 +1,73 @@
+<div id="map-container">
+  <div>
+  </div>
+  <p-table #dt [globalFilterFields]="['id']" [columns]="truckCols" selectionMode="multiple" [(selection)]="selectedTrucks"
+    [value]="trucks" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <div>
+          <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+          <input type="text" pInputText size="50" placeholder="Select Truck ID" (input)="dt.filterGlobal($event.target.value, 'contains')"
+            style="width:auto">
+        </div>
+        <div class="ui-helper-clearfix">
+          <p-button styleClass="update-button" (click)="updateTrucks()" icon="fa fa-fw fa-refresh"></p-button>
+          <button type="button" pButton icon="fa-file-o" iconPos="left" label="Download All" (click)="dt.exportCSV()"></button>
+          <button type="button" pButton icon="fa-file" iconPos="left" label="Download Selected" (click)="dt.exportCSV({selectionOnly:true})"
+            [disabled]="selectedTrucks.length <= 0"></button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of truckCols">
+          {{col.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-truck>
+      <tr [pSelectableRow]="truck">
+        <td>{{ !!truck.id ? truck.id : '---' }}</td>
+        <td>{{ !!truck.startTime ? (truck.startTime | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
+        <td>{{ !!truck.endTime ? (truck.endTime | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
+        <td>{{ !!truck.distance ? truck.distance : '---' }}</td>
+        <td>{{ !!truck.clientsAtended ? truck.clientsAtended : '---' }}</td>
+        <td>{{ !!truck.lastLat ? truck.lastLat : '---' }}</td>
+        <td>{{ !!truck.lastLon ? truck.lastLon : '---' }}</td>
+        <td>
+          <p-button icon="fa fa-fw fa-search" (click)="showServices(truck)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog [(visible)]="!!servicesModal" [modal]=true [width]="450" [draggable]="false">
+    <p-header>
+      Truck {{ selectedTruck.id }}
+    </p-header>
+    <p-table [columns]="servicesCols" [value]="services">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of servicesCols">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-service>
+        <tr>
+          <td>{{ !!service.clientId ? service.clientId : '---' }}</td>
+          <td>{{ !!service.start ? (service.start | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
+          <td>{{ !!service.end ? (service.end | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="columns.length">
+            No services found.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+
+</div>

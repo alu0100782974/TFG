@@ -1,0 +1,51 @@
+<div class="routes-editor">
+
+  <div class="select-client">
+    <label class="show-label">Select truck:</label>
+    <p-dropdown [(options)]="trucks" [(ngModel)]="selectedTruck" (onChange)="selectTruck($event)" optionLabel="id" placeholder="Select Truck">
+    </p-dropdown>
+    <label class="show-label">Select client to add:</label>
+    <p-dropdown [(options)]="comboClients" [(ngModel)]="selectedClient" (click)="updateClients()" (onChange)="selectClient($event)"
+      optionLabel="id" placeholder="Select Client">
+    </p-dropdown>
+
+    <label class="show-label">Select order:</label>
+    <p-spinner name="order" size="30" [disabled]=" (!selectedTruck || !selectedClient) || tableClients.length <= 0" [(ngModel)]="orderValue"
+      [min]="firstNoServing" [max]="tableClients.length+1"></p-spinner>
+
+    <button [disabled]="!selectedTruck || !selectedClient || (!orderValue && tableClients.length > 0)" type="button" pButton
+      label="Add" (click)="addTruck(selectedTruck, selectedClient)"></button>
+  </div>
+  <div class="truck-table">
+    <p-table [columns]="cols" [value]="tableClients" [reorderableColumns]="true">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width:2em">#</th>
+          <th *ngFor="let col of columns" pReorderableColumn>
+            {{col.header}}
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-client>
+        <tr>
+          <td>{{client.order}}</td>
+          <td>{{client.id}}</td>
+          <td>{{client.lat}}</td>
+          <td>{{client.lon}}</td>
+          <td>
+            <button *ngIf="client.serving === false" pButton type="button" class="ui-button-danger" icon="fa fa-fw fa-remove" (click)="deleteClient(client)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="columns.length + 2 ">
+            No clients found.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
