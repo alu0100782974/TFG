@@ -374,7 +374,9 @@ export class HomePage {
       this.clientsProvider.updateClient(this.nextClient);
       resolve();
     }).then(() => {
+
       this.service.end = new Date();
+      this.service.serviceTime = (this.service.end.getTime() - this.service.start.getTime()) / 1000;
       this.served = true;
 
       setTimeout(() => {
@@ -389,15 +391,22 @@ export class HomePage {
           }).addTo(this.map);
 
           //EMIT SERVED
-          this.realTimeProvider.emitServed([this.actualPos.lat, this.actualPos.lon]);
+          this.realTimeProvider.emitServed([this.actualPos.lat, this.actualPos.lon, this.truckId]);
 
           this.markers.push(auxMarker);
 
-          this.truck.clientsAtended++;
+          this.truck.clientsServed++;
           this.truckProvider.update(this.truck);
 
           if (this.clientsToServe.length == 1) {
-            this.end = false;
+            new Promise((resolve) => {
+              this.generatePointsFromJson(this.truckId, resolve);
+            }).then(() => {
+              this.cleanMap();
+              this.printServedClients();
+              this.printAllPoints();
+              this.end = false;
+            })
           } else {
             new Promise((resolve) => {
               this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {

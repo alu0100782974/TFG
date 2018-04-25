@@ -13,12 +13,14 @@
         <th>Client</th>
         <th>Start</th>
         <th>Finish</th>
+        <th>Service time(s)</th>
       </thead>
       <tbody>
         <tr *ngFor="let s of services">
           <td>{{ s.clientId }}</td>
           <td>{{ s.start | date: 'HH:mm:ss' }}</td>
           <td>{{ s.end | date: 'HH:mm:ss' }}</td>
+          <td>{{ s.serviceTime }}</td>
         </tr>
       </tbody>
     </table>

@@ -3,4 +3,5 @@ export class Service {
     public clientId: number;
     public start: Date;
     public end: Date;
+    public serviceTime: number;
 }

@@ -3,7 +3,7 @@ export class Truck {
     public startTime: Date;
     public endTime: Date;
     public distance: number;
-    public clientsAtended: number;
+    public clientsServed: number;
     public lastLat: number;
     public lastLon: number;
 

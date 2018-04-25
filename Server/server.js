@@ -27,7 +27,7 @@ var trucksSchema = new mongoose.Schema({
   startTime: Date,
   endTime: Date,
   distance: Number,
-  clientsAtended: Number,
+  clientsServed: Number,
   lastLat: Number,
   lastLon: Number
 })
@@ -37,7 +37,8 @@ var servicesSchema = new mongoose.Schema({
   clientId: Number,
   truckId: Number,
   start: Date,
-  end: Date
+  end: Date,
+  serviceTime: Number
 })
 var Service = mongoose.model('Service', servicesSchema);
 
@@ -135,11 +136,11 @@ app.get('/clients/id=:id', (request, response) => {
 
 app.get('/clients/truckId=:truckId', (request, response) => {
   Client.find({ truckId: request.params.truckId }, (err, data) => {
-      if (err) throw err;
-      response.writeHead(200, { 'Content-Type': 'application/json' });
-      response.write(JSON.stringify(data));
-      response.end();
-    }).sort('order');
+    if (err) throw err;
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(data));
+    response.end();
+  }).sort('order');
 })
 
 app.get('/clients/truckId=:truckId/serving=:serving', (request, response) => {
@@ -257,7 +258,7 @@ app.put('/trucks', (request, response) => {
       startTime: request.body.startTime,
       endTime: request.body.endTime,
       distance: request.body.distance,
-      clientsAtended: request.body.clientsAtended,
+      clientsServed: request.body.clientsServed,
       lastLat: request.body.lastLat,
       lastLon: request.body.lastLon
     },

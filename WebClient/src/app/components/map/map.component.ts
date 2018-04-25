@@ -173,9 +173,13 @@ export class MapComponent implements OnInit {
   }
 
   public setServedMarker(data) {
-    this.markers.push(new L.marker(data, {
+    this.markers.push(new L.marker([data[0], data[1]], {
       icon: servedIcon,
       zIndexOffset: 99999
     }).addTo(this.map));
+  }
+
+  public getSelectedTruckId(): number {
+    return this.selectedTruck.id;
   }
 }

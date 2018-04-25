@@ -23,8 +23,8 @@ export class HistoricComponent implements OnInit {
     { field: 'id', header: 'ID' },
     { field: 'startTime', header: 'Start Time' },
     { field: 'endTime', header: 'End Time' },
-    { field: 'distance', header: 'Distance' },
-    { field: 'clientsAtended', header: 'Atended Clients' },
+    { field: 'distance', header: 'Distance(m)' },
+    { field: 'clientsServed', header: 'Served Clients' },
     { field: 'lastLat', header: 'Last Latitude' },
     { field: 'lastLon', header: 'Last Longitude' },
     { field: '', header: 'Services' },
@@ -34,6 +34,7 @@ export class HistoricComponent implements OnInit {
     { field: 'clientId', header: 'Client' },
     { field: 'start', header: 'Start Time' },
     { field: 'end', header: 'End Time' },
+    { field: '', header: 'Service time(s)' }
   ];
 
   constructor(private trucksService: TrucksService, private servicesService: ServicesSerivce) {

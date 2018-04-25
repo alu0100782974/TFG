@@ -28,10 +28,10 @@
     <ng-template pTemplate="body" let-truck>
       <tr [pSelectableRow]="truck">
         <td>{{ !!truck.id ? truck.id : '---' }}</td>
-        <td>{{ !!truck.startTime ? (truck.startTime | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
-        <td>{{ !!truck.endTime ? (truck.endTime | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
+        <td>{{ !!truck.startTime ? (truck.startTime | date: 'dd/MM/yyyy HH:mm:ss') : '---' }}</td>
+        <td>{{ !!truck.endTime ? (truck.endTime | date: 'dd/MM/yyyy HH:mm:ss') : '---' }}</td>
         <td>{{ !!truck.distance ? truck.distance : '---' }}</td>
-        <td>{{ !!truck.clientsAtended ? truck.clientsAtended : '---' }}</td>
+        <td>{{ !!truck.clientsServed ? truck.clientsServed : '---' }}</td>
         <td>{{ !!truck.lastLat ? truck.lastLat : '---' }}</td>
         <td>{{ !!truck.lastLon ? truck.lastLon : '---' }}</td>
         <td>
@@ -43,7 +43,7 @@
 
   <p-dialog [(visible)]="!!servicesModal" [modal]=true [width]="450" [draggable]="false">
     <p-header>
-      Truck {{ selectedTruck.id }}
+      Services made by Truck {{ selectedTruck.id }}
     </p-header>
     <p-table [columns]="servicesCols" [value]="services">
       <ng-template pTemplate="header" let-columns>
@@ -56,8 +56,9 @@
       <ng-template pTemplate="body" let-service>
         <tr>
           <td>{{ !!service.clientId ? service.clientId : '---' }}</td>
-          <td>{{ !!service.start ? (service.start | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
-          <td>{{ !!service.end ? (service.end | date: 'dd/MM/yyyy HH:mm') : '---' }}</td>
+          <td>{{ !!service.start ? (service.start | date: 'dd/MM/yyyy HH:mm:ss') : '---' }}</td>
+          <td>{{ !!service.end ? (service.end | date: 'dd/MM/yyyy HH:mm:ss') : '---' }}</td>
+          <td>{{ !!service.serviceTime ? service.serviceTime : '---'}}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage" let-columns>
