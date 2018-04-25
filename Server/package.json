@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "DESPLIEGUE:",
+  "main": "init.js",
+  "dependencies": {
+    "express": "^4.16.3",
+    "cors": "^2.8.4",
+    "mongoose": "^5.0.16",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Ángel Rodríguez Negrín",
+  "license": "MIT"
+}

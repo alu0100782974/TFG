@@ -64,7 +64,7 @@ export class HomePage {
 
   public timeEnd;
   public totalDistance: number;
-  public actualDistance: number = 0;
+  public actualDistance: number;
   public timeEndService;
   public serveInterval = null;
   public timeStartService;
@@ -250,9 +250,14 @@ export class HomePage {
             this.next = false;
             this.connected = true;
             this.timeStart = new Date();
+            this.timeEnd = null;
 
-            this.truck.startTime = this.timeStart;
+            if (this.truck.startTime == null) {
+              this.truck.startTime = this.timeStart;
+            }
             this.truckProvider.update(this.truck);
+
+            this.actualDistance = this.truck.distance;
 
             this.locationInterval = setInterval(() => {
 
@@ -390,7 +395,6 @@ export class HomePage {
             zIndexOffset: 99999
           }).addTo(this.map);
 
-          //EMIT SERVED
           this.realTimeProvider.emitServed([this.actualPos.lat, this.actualPos.lon, this.truckId]);
 
           this.markers.push(auxMarker);

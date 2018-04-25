@@ -497,7 +497,6 @@ var HomePage = (function () {
         this.serve = true;
         this.served = true;
         this.end = true;
-        this.actualDistance = 0;
         this.serveInterval = null;
         this.timer = 0;
         this.clients = [];
@@ -637,8 +636,12 @@ var HomePage = (function () {
                         _this.next = false;
                         _this.connected = true;
                         _this.timeStart = new Date();
-                        _this.truck.startTime = _this.timeStart;
+                        _this.timeEnd = null;
+                        if (_this.truck.startTime == null) {
+                            _this.truck.startTime = _this.timeStart;
+                        }
                         _this.truckProvider.update(_this.truck);
+                        _this.actualDistance = _this.truck.distance;
                         _this.locationInterval = setInterval(function () {
                             var aux = {
                                 truckId: _this.truckId,
@@ -752,7 +755,6 @@ var HomePage = (function () {
                         icon: __WEBPACK_IMPORTED_MODULE_3__utils_markers__["a" /* servedIcon */],
                         zIndexOffset: 99999
                     }).addTo(_this.map);
-                    //EMIT SERVED
                     _this.realTimeProvider.emitServed([_this.actualPos.lat, _this.actualPos.lon, _this.truckId]);
                     _this.markers.push(auxMarker);
                     _this.truck.clientsServed++;
