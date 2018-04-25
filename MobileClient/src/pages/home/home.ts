@@ -250,7 +250,7 @@ export class HomePage {
             this.next = false;
             this.connected = true;
             this.timeStart = new Date();
-            this.timeEnd = null;
+            this.truck.endTime = null;
 
             if (this.truck.startTime == null) {
               this.truck.startTime = this.timeStart;
