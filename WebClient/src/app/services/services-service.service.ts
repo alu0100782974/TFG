@@ -12,7 +12,7 @@ export class ServicesSerivce {
   constructor(public http: Http) { }
 
   public getClientsServed(truckId: number): Observable<Service[]> {
-    return this.http.get(`${this.urlBackend}/services/truckId=${truckId}`).map(res => res.json());
+    return this.http.get(`${this.urlBackend}/services?truckId=${truckId}`).map(res => res.json());
   }
 
   public setUrlBackend(server: string): void {

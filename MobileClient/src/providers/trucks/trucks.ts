@@ -17,7 +17,7 @@ export class TrucksProvider {
     }
 
     public getTruck(truckId: Number): Observable<Truck> {
-        return this.http.get(`${this.urlBackend}/trucks/id=${truckId}`).map(res => res.json());
+        return this.http.get(`${this.urlBackend}/trucks?id=${truckId}`).map(res => res.json());
     }
 
     public update(truck: Truck) {

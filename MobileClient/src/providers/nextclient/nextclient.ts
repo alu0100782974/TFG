@@ -20,7 +20,7 @@ export class NextClientProvider {
   }
 
   public getNextClient(clientId: number): Observable<Client> {
-    return this.http.get(`${this.urlBackend}/clients/id=${clientId}`).map(res => res.json());
+    return this.http.get(`${this.urlBackend}/clients?id=${clientId}`).map(res => res.json());
   }
 
   public setUrlBackend(server: string): void {

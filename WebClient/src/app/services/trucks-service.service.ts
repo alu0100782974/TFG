@@ -11,7 +11,8 @@ export class TrucksService {
   constructor(public http: Http) { }
 
   public getTruck(truckId: Number): Observable<Truck> {
-    return this.http.get(`${this.urlBackend}/trucks/id=${truckId}`).map(res => res.json());
+    console.log(`${this.urlBackend}/trucks?id=${truckId}`);
+    return this.http.get(`${this.urlBackend}/trucks?id=${truckId}`).map(res => res.json());
   }
 
   public getTrucks(): Observable<Truck[]> {

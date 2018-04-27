@@ -57,7 +57,7 @@ export class SolutionsComponent implements OnInit {
     const cliente = this.tableClients.find(x => x.serving === false);
     if (!!cliente) {
       this.clientsService.getClient(cliente.id).subscribe(auxClient => {
-        if (auxClient.serving === true) {
+        if (auxClient[0].serving === true) {
           alert('This client is being served');
           this.clientsService.getClientsByTruckId(this.selectedTruck.id).subscribe(c => {
             this.tableClients = c;
@@ -104,7 +104,7 @@ export class SolutionsComponent implements OnInit {
 
     const p = new Promise((resolve) => {
       this.clientsService.getClient(client.id).subscribe(c => {
-        auxCli = c;
+        auxCli = c[0];
         resolve();
       });
     }).then(() => {
@@ -149,8 +149,15 @@ export class SolutionsComponent implements OnInit {
     this.clientsService.getClientsByTruckId(this.selectedTruck.id).subscribe(cli => {
       this.tableClients = cli;
       // poner if
-      const client = this.tableClients.find(aux => aux.serving === false);
-      this.orderValue = client.order;
+      if(this.tableClients.length!=0){
+        const client = this.tableClients.find(aux => aux.serving === false);
+        if(!client){
+          this.orderValue=this.tableClients.length+1
+        }else
+          this.orderValue = client.order;
+      }else{
+        this.orderValue=1;
+      }
     });
 
   }

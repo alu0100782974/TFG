@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
     });
     this.markersArray = [];
     this.trucksService.getTruck(e.value.id).subscribe(res => {
-      this.markersArray.push([e.value.id, L.marker([res.lastLat, res.lastLon], { icon: truckIcon, zIndexOffset: 999999 }).addTo(this.map)]);
+      this.markersArray.push([e.value.id, L.marker([res[0].lastLat, res[0].lastLon], { icon: truckIcon, zIndexOffset: 999999 }).addTo(this.map)]);
     });
     this.control = e.value.id;
     this.generateWayPointsFromRoute(e.value.id);

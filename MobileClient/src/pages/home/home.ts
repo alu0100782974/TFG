@@ -183,7 +183,7 @@ export class HomePage {
 
     new Promise((resolve) => {
       this.truckProvider.getTruck(this.truckId).subscribe(t => {
-        this.truck = t;
+        this.truck = t[0];
         this.actualPos.lat = this.truck.lastLat;
         this.actualPos.lon = this.truck.lastLon;
         resolve();
@@ -235,7 +235,7 @@ export class HomePage {
       if (this.clientsToServe.length != 1) {
         new Promise((resolve) => {
           this.clientsProvider.getClient(this.clientsToServe[1].id).subscribe(cli => {
-            this.nextClient = cli;
+            this.nextClient = cli[0];
             resolve();
           })
         }).then(() => {
@@ -282,7 +282,7 @@ export class HomePage {
             }, 1000);
 
             this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {
-              this.nextClient = client;
+              this.nextClient = client[0];
             });
           })
         });
@@ -312,7 +312,7 @@ export class HomePage {
       if (!!this.clientsToServe[1]) {
         new Promise((resolve) => {
           this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {
-            this.nextClient = client;
+            this.nextClient = client[0];
             resolve();
           });
         }).then(() => {
@@ -348,22 +348,6 @@ export class HomePage {
     this.serve = true;
     this.served = false;
 
-    /* if ((this.clientsToServe[this.actualCli + 1].open > this.timeStartService.getHours()) || (this.clientsToServe[this.actualCli + 1].close < this.timeStartService.getHours())) {
-      alert('Client is closed, please wait until it opens');
-
-      clearInterval(this.serveInterval);
-      this.serveInterval = setInterval(() => {
-
-        this.generatePointsFromJson(this.truckId);
-        this.map.panTo(new L.latLng(this.actualPos.lat, this.actualPos.lon));
-
-      }, 5000)
-    } else {
-      if (this.serveInterval != null) {
-        clearInterval(this.serveInterval);
-      }
-      
-    } */
   }
 
   ///////////////////////////////////////////////////////////
@@ -414,7 +398,7 @@ export class HomePage {
           } else {
             new Promise((resolve) => {
               this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {
-                this.nextClient = client;
+                this.nextClient = client[0];
                 resolve();
               })
             }).then(() => {
@@ -507,21 +491,6 @@ export class HomePage {
       time += 20;
     }
   }
-
-  /* public checkPoints() {
-
-    let dateAux = new Date();
-
-    for (let i = 1; i < this.clientsToServe.length; i++) {
-
-      if ((this.clientsToServe[i].open > dateAux.getHours()) || (this.clientsToServe[i].close < dateAux.getHours())) {
-        var aux = new L.marker(new L.latLng(this.clientsToServe[i].lat, this.clientsToServe[i].lon), {
-          icon: blackIcon
-        }).addTo(this.map);
-        this.markers.push(aux);
-      }
-    }
-  } */
 
   private getDistance(origin, destination) {
 

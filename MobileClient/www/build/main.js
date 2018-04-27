@@ -39,17 +39,15 @@ var ServicesProvider = (function () {
         enumerable: true,
         configurable: true
     });
-    //ARREGLAR
     ServicesProvider.prototype.getClientsServed = function () {
         var _this = this;
-        this.http.get(this.urlBackend + "/services/truckId=" + this.truckId).map(function (res) { return res.json(); })
+        this.http.get(this.urlBackend + "/services?truckId=" + this.truckId).map(function (res) { return res.json(); })
             .subscribe(function (res) {
             _this.servicesSubject.next(res);
         });
     };
     ServicesProvider.prototype.saveClientInfo = function (service) {
         this.http.post(this.urlBackend + "/services", service).map(function (res) { return res.json(); }).subscribe(function (res) {
-            // this.servicesSubject.next(res);
         });
     };
     ServicesProvider.prototype.setUrlBackend = function (server) {
@@ -149,7 +147,7 @@ var TrucksProvider = (function () {
         this.http = http;
     }
     TrucksProvider.prototype.getTruck = function (truckId) {
-        return this.http.get(this.urlBackend + "/trucks/id=" + truckId).map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/trucks?id=" + truckId).map(function (res) { return res.json(); });
     };
     TrucksProvider.prototype.update = function (truck) {
         this.http.put(this.urlBackend + "/trucks", truck).subscribe();
@@ -197,22 +195,22 @@ var ClientsProvider = (function () {
         this.http = http;
     }
     ClientsProvider.prototype.getServedClientsByTruckId = function (truckId) {
-        return this.http.get(this.urlBackend + "/clients/truckId=" + truckId + "/served=true").map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?truckId=" + truckId + "&served=true").map(function (res) { return res.json(); });
     };
     ClientsProvider.prototype.getNonServedClientsByTruckId = function (truckId) {
-        return this.http.get(this.urlBackend + "/clients/truckId=" + truckId + "/served=false").map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?truckId=" + truckId + "&served=false").map(function (res) { return res.json(); });
     };
     ClientsProvider.prototype.getServingClientsByTruckId = function (truckId) {
-        return this.http.get(this.urlBackend + "/clients/truckId=" + truckId + "/serving=true").map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?truckId=" + truckId + "&serving=true").map(function (res) { return res.json(); });
     };
     ClientsProvider.prototype.getNonServingClientsByTruckId = function (truckId) {
-        return this.http.get(this.urlBackend + "/clients/truckId=" + truckId + "/serving=false").map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?truckId=" + truckId + "&serving=false").map(function (res) { return res.json(); });
     };
     ClientsProvider.prototype.getClientsByTruckId = function (truckId) {
-        return this.http.get(this.urlBackend + "/clients/truckId=" + truckId).map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?truckId=" + truckId).map(function (res) { return res.json(); });
     };
     ClientsProvider.prototype.getClient = function (id) {
-        return this.http.get(this.urlBackend + "/clients/id=" + id).map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?id=" + id).map(function (res) { return res.json(); });
     };
     ClientsProvider.prototype.updateClient = function (client) {
         this.http.put(this.urlBackend + "/clients", client).subscribe();
@@ -382,7 +380,7 @@ var LoginPage = (function () {
     };
     LoginPage = LoginPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-login',template:/*ion-inline-start:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Login Page</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header> -->\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <br>\n\n  <div class="form">\n\n    <form class="ui-g-12 form-group" #bookForm="ngForm">\n\n\n\n      <div class="form-group">\n\n        <label for="usuario">Usuario/Camión</label>\n\n        <input class="form-control" type="number" [(ngModel)]="userId" name="truck" required>\n\n      </div>\n\n\n\n      <div class="form-group">\n\n        <label for="password">Contraseña</label>\n\n        <input class="form-control" type="password" [(ngModel)]="passwd" name="Password" required>\n\n\n\n      </div>\n\n      <div class="form-group">\n\n        <label for="server">Servidor</label>\n\n        <input class="form-control" type="text" [(ngModel)]="serverId" name="Server" required>\n\n      </div>\n\n\n\n      <div class="form-group">\n\n        <label for="server">Puerto Websocket</label>\n\n        <input class="form-control" type="text" [(ngModel)]="port1" name="port1" required>\n\n      </div>\n\n\n\n      <div class="form-group">\n\n        <label for="server">Puerto API REST</label>\n\n        <input class="form-control" type="text" [(ngModel)]="port2" name="port2" required>\n\n      </div>\n\n      <button class="login-button" [disabled]="!bookForm.form.valid" (click)="pushParams()">Login</button>\n\n    </form>\n\n  </div>\n\n  <br>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\pages\login\login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<!-- <ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Login Page</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header> -->\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <br>\n\n  <div class="form">\n\n    <form class="ui-g-12 form-group" #bookForm="ngForm">\n\n\n\n      <div class="form-group">\n\n        <label for="usuario">Usuario/Camión</label>\n\n        <input class="form-control" type="number" [(ngModel)]="userId" name="truck" required>\n\n      </div>\n\n\n\n      <div class="form-group">\n\n        <label for="password">Contraseña</label>\n\n        <input class="form-control" type="password" [(ngModel)]="passwd" name="Password" required>\n\n\n\n      </div>\n\n      <div class="form-group">\n\n        <label for="server">Servidor</label>\n\n        <input class="form-control" type="text" [(ngModel)]="serverId" name="Server" required>\n\n      </div>\n\n\n\n      <div class="form-group">\n\n        <label for="server">Puerto Websocket</label>\n\n        <input class="form-control" type="text" [(ngModel)]="port1" name="port1" required>\n\n      </div>\n\n\n\n      <div class="form-group">\n\n        <label for="server">Puerto API REST</label>\n\n        <input class="form-control" type="text" [(ngModel)]="port2" name="port2" required>\n\n      </div>\n\n      <button class="login-button" [disabled]="!bookForm.form.valid" (click)="pushParams()">Login</button>\n\n    </form>\n\n  </div>\n\n  <br>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\pages\login\login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_trucks_trucks__["a" /* TrucksProvider */]])
     ], LoginPage);
@@ -574,7 +572,7 @@ var HomePage = (function () {
         this.connect = true;
         new Promise(function (resolve) {
             _this.truckProvider.getTruck(_this.truckId).subscribe(function (t) {
-                _this.truck = t;
+                _this.truck = t[0];
                 _this.actualPos.lat = _this.truck.lastLat;
                 _this.actualPos.lon = _this.truck.lastLon;
                 resolve();
@@ -623,7 +621,7 @@ var HomePage = (function () {
             if (_this.clientsToServe.length != 1) {
                 new Promise(function (resolve) {
                     _this.clientsProvider.getClient(_this.clientsToServe[1].id).subscribe(function (cli) {
-                        _this.nextClient = cli;
+                        _this.nextClient = cli[0];
                         resolve();
                     });
                 }).then(function () {
@@ -657,7 +655,7 @@ var HomePage = (function () {
                             _this.realTimeProvider.emitMove(_this.truck);
                         }, 1000);
                         _this.nextClientProvider.getNextClient(_this.clientsToServe[1].id).subscribe(function (client) {
-                            _this.nextClient = client;
+                            _this.nextClient = client[0];
                         });
                     });
                 });
@@ -683,7 +681,7 @@ var HomePage = (function () {
             if (!!_this.clientsToServe[1]) {
                 new Promise(function (resolve) {
                     _this.nextClientProvider.getNextClient(_this.clientsToServe[1].id).subscribe(function (client) {
-                        _this.nextClient = client;
+                        _this.nextClient = client[0];
                         resolve();
                     });
                 }).then(function () {
@@ -715,22 +713,6 @@ var HomePage = (function () {
         this.service.end = null;
         this.serve = true;
         this.served = false;
-        /* if ((this.clientsToServe[this.actualCli + 1].open > this.timeStartService.getHours()) || (this.clientsToServe[this.actualCli + 1].close < this.timeStartService.getHours())) {
-          alert('Client is closed, please wait until it opens');
-    
-          clearInterval(this.serveInterval);
-          this.serveInterval = setInterval(() => {
-    
-            this.generatePointsFromJson(this.truckId);
-            this.map.panTo(new L.latLng(this.actualPos.lat, this.actualPos.lon));
-    
-          }, 5000)
-        } else {
-          if (this.serveInterval != null) {
-            clearInterval(this.serveInterval);
-          }
-          
-        } */
     };
     ///////////////////////////////////////////////////////////
     ///////////////// CLIENT SERVED BUTTON ///////////////////
@@ -772,7 +754,7 @@ var HomePage = (function () {
                     else {
                         new Promise(function (resolve) {
                             _this.nextClientProvider.getNextClient(_this.clientsToServe[1].id).subscribe(function (client) {
-                                _this.nextClient = client;
+                                _this.nextClient = client[0];
                                 resolve();
                             });
                         }).then(function () {
@@ -845,20 +827,6 @@ var HomePage = (function () {
             _loop_1(i);
         }
     };
-    /* public checkPoints() {
-  
-      let dateAux = new Date();
-  
-      for (let i = 1; i < this.clientsToServe.length; i++) {
-  
-        if ((this.clientsToServe[i].open > dateAux.getHours()) || (this.clientsToServe[i].close < dateAux.getHours())) {
-          var aux = new L.marker(new L.latLng(this.clientsToServe[i].lat, this.clientsToServe[i].lon), {
-            icon: blackIcon
-          }).addTo(this.map);
-          this.markers.push(aux);
-        }
-      }
-    } */
     HomePage.prototype.getDistance = function (origin, destination) {
         var lon1 = this.toRadian(origin[1]), lat1 = this.toRadian(origin[0]), lon2 = this.toRadian(destination[1]), lat2 = this.toRadian(destination[0]);
         var deltaLat = lat2 - lat1;
@@ -945,7 +913,7 @@ var HomePage = (function () {
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\pages\home\home.html"*/'<ion-content>\n\n  <div class="buttons-wrapper">\n\n\n\n    <div *ngIf="!connected" class="connection-buttons">\n\n      <button id="connect-button" [disabled]="connect" (click)="connectToServer()">Connect</button>\n\n      <div>\n\n        <button [disabled]="show" (click)="showMyRoute()">Show my route</button>\n\n        <button [disabled]="start" (click)="startRoute()">Start Route</button>\n\n      </div>\n\n    </div>\n\n\n\n    <div *ngIf="!!connected" class="menu-buttons">\n\n      <div>\n\n        <button [disabled]="next" (click)="goToNextClient()">To next client</button>\n\n        <button [disabled]="serve" (click)="startService()">Serve</button>\n\n        <button [disabled]="served" (click)="endService()">Client Served</button>\n\n      </div>\n\n      <button id="end-button" [disabled]="end" (click)="endSimulation()">End Route</button>\n\n      <div class="info-wrapper">\n\n        <span> Start: {{ timeStart | date: \'mediumTime\' }}</span>\n\n        <!-- <span> Finish: {{ timeEnd | date: \'mediumTime\' }}</span> -->\n\n        <span> Crono: {{ timer }}s</span>\n\n        <span> Truck distance: {{ actualDistance }} m</span>\n\n        <span> Route distance: {{ totalDistance }} m</span>\n\n\n\n      </div>\n\n    </div>\n\n\n\n  </div>\n\n  <div id="map">\n\n    <next-client [nextClient]="nextClient" *ngIf="!!connected"></next-client>\n\n  </div>\n\n\n\n  <div *ngIf="!!connected">\n\n    <menu></menu>\n\n  </div>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\pages\home\home.html"*/'<ion-content>\n\n  <div class="buttons-wrapper">\n\n\n\n    <div *ngIf="!connected" class="connection-buttons">\n\n      <button id="connect-button" [disabled]="connect" (click)="connectToServer()">Connect</button>\n\n      <div>\n\n        <button [disabled]="show" (click)="showMyRoute()">Show my route</button>\n\n        <button [disabled]="start" (click)="startRoute()">Start Route</button>\n\n      </div>\n\n    </div>\n\n\n\n    <div *ngIf="!!connected" class="menu-buttons">\n\n      <div>\n\n        <button [disabled]="next" (click)="goToNextClient()">To next client</button>\n\n        <button [disabled]="serve" (click)="startService()">Serve</button>\n\n        <button [disabled]="served" (click)="endService()">Client Served</button>\n\n      </div>\n\n      <button id="end-button" [disabled]="end" (click)="endSimulation()">End Route</button>\n\n      <div class="info-wrapper">\n\n        <span> Start: {{ timeStart | date: \'mediumTime\' }}</span>\n\n        <!-- <span> Finish: {{ timeEnd | date: \'mediumTime\' }}</span> -->\n\n        <span> Crono: {{ timer }}s</span>\n\n        <span> Truck distance: {{ actualDistance }} m</span>\n\n        <span> Route distance: {{ totalDistance }} m</span>\n\n\n\n      </div>\n\n    </div>\n\n\n\n  </div>\n\n  <div id="map">\n\n    <next-client [nextClient]="nextClient" *ngIf="!!connected"></next-client>\n\n  </div>\n\n\n\n  <div *ngIf="!!connected">\n\n    <menu></menu>\n\n  </div>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
@@ -1011,7 +979,7 @@ var NextClientProvider = (function () {
         this.http = http;
     }
     NextClientProvider.prototype.getNextClient = function (clientId) {
-        return this.http.get(this.urlBackend + "/clients/id=" + clientId).map(function (res) { return res.json(); });
+        return this.http.get(this.urlBackend + "/clients?id=" + clientId).map(function (res) { return res.json(); });
     };
     NextClientProvider.prototype.setUrlBackend = function (server) {
         this.urlBackend = server;
@@ -1306,7 +1274,7 @@ var MyApp = (function () {
         });
     }
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\app\app.html"*/'<!-- <ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Sistema de gestión de transporte\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header> -->\n\n<ion-content>\n\n    <ion-nav [root]="rootPage"></ion-nav>\n\n</ion-content>'/*ion-inline-end:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\app\app.html"*/'<!-- <ion-header>\n\n    <ion-navbar>\n\n        <ion-title>\n\n            Sistema de gestión de transporte\n\n        </ion-title>\n\n    </ion-navbar>\n\n</ion-header> -->\n\n<ion-content>\n\n    <ion-nav [root]="rootPage"></ion-nav>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
@@ -1410,7 +1378,7 @@ var NextClientComponent = (function () {
     ], NextClientComponent.prototype, "nextClient", void 0);
     NextClientComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'next-client',template:/*ion-inline-start:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\components\next-client\next-client.html"*/'<!-- Generated template for the NextClientComponent component -->\n\n<div class="banner">\n\n  <span class="header">Next client to visit</span>\n\n  <div class="body">\n\n    <label for="name">\n\n      Name: {{nextClient?.name}}\n\n    </label>\n\n    <label for="adress">\n\n      Address: {{nextClient?.address}}\n\n    </label>\n\n    <label for="open">\n\n      Open-Close: {{nextClient?.open }} - {{nextClient?.close}}\n\n    </label>\n\n  </div>\n\n</div>'/*ion-inline-end:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\components\next-client\next-client.html"*/
+            selector: 'next-client',template:/*ion-inline-start:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\components\next-client\next-client.html"*/'<!-- Generated template for the NextClientComponent component -->\n\n<div class="banner">\n\n  <span class="header">Next client to visit</span>\n\n  <div class="body">\n\n    <label for="name">\n\n      Name: {{nextClient?.name}}\n\n    </label>\n\n    <label for="adress">\n\n      Address: {{nextClient?.address}}\n\n    </label>\n\n    <label for="open">\n\n      Open-Close: {{nextClient?.open }} - {{nextClient?.close}}\n\n    </label>\n\n  </div>\n\n</div>'/*ion-inline-end:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\components\next-client\next-client.html"*/
         }),
         __metadata("design:paramtypes", [])
     ], NextClientComponent);
@@ -1497,7 +1465,7 @@ var MenuComponent = (function () {
     };
     MenuComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'menu',template:/*ion-inline-start:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\components\menu\menu.html"*/'<div>\n\n  <div class="buttons-wrapper menu-buttons">\n\n    <button (click)="getClientsServed()">Clients attended</button>\n\n    <button (click)="getClientsToServe()">Clients to attend</button>\n\n    <button (click)="getLocations()">My tracking</button>\n\n  </div>\n\n</div>\n\n\n\n<p-dialog header="Services" [draggable]="false" [(visible)]="display">\n\n  <p-scrollPanel [style]="{height: \'200px\'}">\n\n    <table class="table" border="1">\n\n      <thead>\n\n        <th>Client</th>\n\n        <th>Start</th>\n\n        <th>Finish</th>\n\n        <th>Service time(s)</th>\n\n      </thead>\n\n      <tbody>\n\n        <tr *ngFor="let s of services">\n\n          <td>{{ s.clientId }}</td>\n\n          <td>{{ s.start | date: \'HH:mm:ss\' }}</td>\n\n          <td>{{ s.end | date: \'HH:mm:ss\' }}</td>\n\n          <td>{{ s.serviceTime }}</td>\n\n        </tr>\n\n      </tbody>\n\n    </table>\n\n  </p-scrollPanel>\n\n</p-dialog>\n\n\n\n<p-dialog header="Tracking" [draggable]="false" [(visible)]="display2">\n\n  <p-scrollPanel [style]="{height: \'200px\'}">\n\n    <table class="table" border="1">\n\n      <thead>\n\n        <th>Latitude</th>\n\n        <th>Longitude</th>\n\n      </thead>\n\n      <tbody>\n\n        <tr *ngFor="let l of locations ">\n\n          <td>{{ l.lat }}</td>\n\n          <td>{{ l.lon }}</td>\n\n        </tr>\n\n      </tbody>\n\n    </table>\n\n  </p-scrollPanel>\n\n</p-dialog>\n\n\n\n<p-dialog header="Clients to serve" [draggable]="false" [(visible)]="display3">\n\n  <p-scrollPanel [style]="{height: \'200px\'}">\n\n    <table class="table" border="1">\n\n      <thead>\n\n        <th>ClientId</th>\n\n        <th>Latitude</th>\n\n        <th>Longitude</th>\n\n      </thead>\n\n      <tbody>\n\n        <tr *ngFor="let l of clientsToAttend ">\n\n          <td>{{ l.id }}</td>\n\n          <td>{{ l.lat }}</td>\n\n          <td>{{ l.lon }}</td>\n\n        </tr>\n\n      </tbody>\n\n    </table>\n\n  </p-scrollPanel>\n\n</p-dialog>'/*ion-inline-end:"C:\Users\A680127\Desktop\TFG2.0\MobileClient\src\components\menu\menu.html"*/
+            selector: 'menu',template:/*ion-inline-start:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\components\menu\menu.html"*/'<div>\n\n  <div class="buttons-wrapper menu-buttons">\n\n    <button (click)="getClientsServed()">Clients served</button>\n\n    <button (click)="getClientsToServe()">Clients to serve</button>\n\n    <button (click)="getLocations()">My tracking</button>\n\n  </div>\n\n</div>\n\n\n\n<p-dialog header="Services" [draggable]="false" [(visible)]="display">\n\n  <p-scrollPanel [style]="{height: \'200px\'}">\n\n    <table class="table" border="1">\n\n      <thead>\n\n        <th>Client</th>\n\n        <th>Start</th>\n\n        <th>Finish</th>\n\n        <th>Service time(s)</th>\n\n      </thead>\n\n      <tbody>\n\n        <tr *ngFor="let s of services">\n\n          <td>{{ s.clientId }}</td>\n\n          <td>{{ s.start | date: \'HH:mm:ss\' }}</td>\n\n          <td>{{ s.end | date: \'HH:mm:ss\' }}</td>\n\n          <td>{{ s.serviceTime }}</td>\n\n        </tr>\n\n      </tbody>\n\n    </table>\n\n  </p-scrollPanel>\n\n</p-dialog>\n\n\n\n<p-dialog header="Tracking" [draggable]="false" [(visible)]="display2">\n\n  <p-scrollPanel [style]="{height: \'200px\'}">\n\n    <table class="table" border="1">\n\n      <thead>\n\n        <th>Latitude</th>\n\n        <th>Longitude</th>\n\n      </thead>\n\n      <tbody>\n\n        <tr *ngFor="let l of locations ">\n\n          <td>{{ l.lat }}</td>\n\n          <td>{{ l.lon }}</td>\n\n        </tr>\n\n      </tbody>\n\n    </table>\n\n  </p-scrollPanel>\n\n</p-dialog>\n\n\n\n<p-dialog header="Clients to serve" [draggable]="false" [(visible)]="display3">\n\n  <p-scrollPanel [style]="{height: \'200px\'}">\n\n    <table class="table" border="1">\n\n      <thead>\n\n        <th>ClientId</th>\n\n        <th>Latitude</th>\n\n        <th>Longitude</th>\n\n      </thead>\n\n      <tbody>\n\n        <tr *ngFor="let l of clientsToAttend ">\n\n          <td>{{ l.id }}</td>\n\n          <td>{{ l.lat }}</td>\n\n          <td>{{ l.lon }}</td>\n\n        </tr>\n\n      </tbody>\n\n    </table>\n\n  </p-scrollPanel>\n\n</p-dialog>'/*ion-inline-end:"C:\Users\Ángel\Desktop\TFGv2\MobileClient\src\components\menu\menu.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["f" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1__providers_clients_served_clients_served__["a" /* ServicesProvider */],

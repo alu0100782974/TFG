@@ -26,9 +26,8 @@ export class ServicesProvider {
   }
 
 
-  //ARREGLAR
   public getClientsServed(): void {
-    this.http.get(`${this.urlBackend}/services/truckId=${this.truckId}`).map(res => res.json())
+    this.http.get(`${this.urlBackend}/services?truckId=${this.truckId}`).map(res => res.json())
       .subscribe(res => {
         this.servicesSubject.next(res);
       });
@@ -36,7 +35,6 @@ export class ServicesProvider {
 
   public saveClientInfo(service: Service): void {
     this.http.post(`${this.urlBackend}/services`, service).map(res => res.json()).subscribe(res => {
-      // this.servicesSubject.next(res);
     });
   }
 

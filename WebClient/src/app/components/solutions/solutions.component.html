@@ -7,7 +7,7 @@
     </p-dropdown>
     <label class="show-label">Select client to add:</label>
     <p-dropdown [(options)]="comboClients" [(ngModel)]="selectedClient" (click)="updateClients()" (onChange)="selectClient($event)"
-      optionLabel="id" placeholder="Select Client" size="10">
+      optionLabel="id" placeholder="Select Client" size="10" [disabled]=!selectedTruck>
     </p-dropdown>
 
     <label class="show-label">Select order:</label>
