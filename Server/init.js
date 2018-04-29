@@ -22,8 +22,8 @@ db.clients.insert({ "lat": 28.4865127, "lon": -16.3271648, "id": 18, "name": "cl
 db.clients.insert({ "lat": 28.4044498, "lon": -16.3255256, "id": 19, "name": "client19", "address": "address19", "open": 8, "close": 22, "truckId": null, "served": false, "serving": false, "closed": false, "order": 99 });
 db.clients.insert({ "lat": 28.3894865, "lon": -16.344337, "id": 20, "name": "client20", "address": "address20", "open": 8, "close": 22, "truckId": 3, "served": false, "serving": false, "closed": false, "order": 3 });
 db.createCollection("trucks");
-db.trucks.insert({ "id": 1, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061 });
-db.trucks.insert({ "id": 2, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061 });
-db.trucks.insert({ "id": 3, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061 });
-db.trucks.insert({ "id": 4, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061 });
+db.trucks.insert({ "id": 1, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061, "startLat": 28.4091675, "startLon": -16.5616061 });
+db.trucks.insert({ "id": 2, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061, "startLat": 28.4091675, "startLon": -16.5616061 });
+db.trucks.insert({ "id": 3, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061, "startLat": 28.4091675, "startLon": -16.5616061 });
+db.trucks.insert({ "id": 4, "startTime": null, "endTime": null, "distance": 0, "clientsServed": 0, "lastLat": 28.4091675, "lastLon": -16.5616061, "startLat": 28.4091675, "startLon": -16.5616061 });
 db.createCollection("services");

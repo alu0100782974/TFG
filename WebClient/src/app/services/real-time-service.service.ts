@@ -36,6 +36,8 @@ export class RealTimeService {
     this.socket.on('served', (data) => {
       if (this.mapComponent.getSelectedTruckId() === data[2]) {
         this.mapComponent.setServedMarker(data);
+      }else if(this.mapComponent.getSelectedTruckId() === null){
+        this.mapComponent.setServedMarker(data);
       }
     });
   }

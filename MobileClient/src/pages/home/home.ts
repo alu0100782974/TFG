@@ -3,8 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
 import { Client } from '../../pojo/clientPojo';
 import { Location } from '../../pojo/locationPojo'
-import { Observable } from 'rxjs/Rx';
-import { truckIcon, flagIcon, blackIcon, servedIcon } from '../utils/markers';
+import { truckIcon, servedIcon, redIcon, flagIcon } from '../utils/markers';
 import 'rxjs/add/operator/map';
 import { Service } from '../../pojo/servicePojo';
 import { ServicesProvider } from '../../providers/clients-served/clients-served';
@@ -63,6 +62,7 @@ export class HomePage {
   private backendUrl: string;
 
   public timeEnd;
+  public timeEstimation: any;
   public totalDistance: number;
   public actualDistance: number;
   public timeEndService;
@@ -141,38 +141,6 @@ export class HomePage {
   }
 
   ///////////////////////////////////////////////////////////
-  ///////////////////// PARSE JSON //////////////////////////
-  ///////////////////////////////////////////////////////////
-
-  public generatePointsFromJson(truckId, resolve?) {
-
-    this.clientsProvider.getNonServedClientsByTruckId(truckId).subscribe(clients => {
-
-      const firstPoint: Client = new Client();
-
-      firstPoint.lat = this.actualPos.lat;
-      firstPoint.lon = this.actualPos.lon;
-
-      this.clientsToServe = clients;
-
-      this.clientsToServe.unshift(firstPoint);
-
-      this.createRoute();
-
-      resolve();
-    });
-  }
-
-  async createRoute() {
-    let waypointaux = [];
-
-    for (let i = 0; i < this.clientsToServe.length; i++) {
-      waypointaux.push({ lat: this.clientsToServe[i].lat, lon: this.clientsToServe[i].lon });
-    }
-    this.createControl(waypointaux, false);
-  }
-
-  ///////////////////////////////////////////////////////////
   ///////////////// CONNECTION BUTTON ///////////////////////
   ///////////////////////////////////////////////////////////
 
@@ -186,6 +154,7 @@ export class HomePage {
         this.truck = t[0];
         this.actualPos.lat = this.truck.lastLat;
         this.actualPos.lon = this.truck.lastLon;
+        //console.log(this.truck)
         resolve();
       })
     }).then(() => {
@@ -193,6 +162,7 @@ export class HomePage {
         icon: truckIcon,
         zIndexOffset: 9999999
       }).addTo(this.map);
+
       this.show = false;
     })
   }
@@ -202,21 +172,24 @@ export class HomePage {
   ///////////////////////////////////////////////////////////
 
   public showMyRoute() {
+
     this.show = true;
     if (this.realTimeProvider.getSocket().connected === true) {
       new Promise((resolve) => {
         this.printAllPoints();
-        this.generatePointsFromJson(this.truckId, resolve);
+        this.printServedClients();
+        new L.marker(new L.latLng(this.truck.startLat, this.truck.startLon), {
+          icon: flagIcon,
+          zIndexOffset: 999999
+        }).addTo(this.map);
+        resolve();
       }).then(() => {
-        if (this.clientsToServe.length < 1) {
-          alert('No clients assigned');
-        } else {
-          this.start = false;
-        }
+        this.start = false;
       });
     } else {
       alert('Server is down, please restart the app');
     }
+    //console.log(this.truck)
   }
 
   ///////////////////////////////////////////////////////////
@@ -226,71 +199,70 @@ export class HomePage {
 
   public startRoute() {
 
-    this.printServedClients();
-    this.printAllPoints();
     new Promise((resolve) => {
-      this.generatePointsFromJson(this.truckId, resolve);
-    }).then(() => {
+      this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c=>{
 
-      if (this.clientsToServe.length != 1) {
-        new Promise((resolve) => {
-          this.clientsProvider.getClient(this.clientsToServe[1].id).subscribe(cli => {
-            this.nextClient = cli[0];
-            resolve();
-          })
-        }).then(() => {
-
-          let waypointsaux = [{ lat: this.clientsToServe[0].lat, lon: this.clientsToServe[0].lon },
-          { lat: this.nextClient.lat, lon: this.nextClient.lon }];
-
+        this.clientsToServe = c;
+        
+        if(c.length > 0) {
           new Promise((resolve) => {
-            this.GetPointsBetweenWaypoints(waypointsaux, resolve);
+            this.clientsProvider.getClient(this.clientsToServe[0].id).subscribe(cli => {
+              this.nextClient = cli[0];
+              resolve();
+            })
           }).then(() => {
-            this.start = true;
-            this.next = false;
-            this.connected = true;
-            this.timeStart = new Date();
-            this.truck.endTime = null;
 
-            if (this.truck.startTime == null) {
-              this.truck.startTime = this.timeStart;
-            }
-            this.truckProvider.update(this.truck);
-
-            this.actualDistance = this.truck.distance;
-
-            this.locationInterval = setInterval(() => {
-
-              let aux: Location = {
-                truckId: this.truckId,
-                lat: this.actualPos.lat,
-                lon: this.actualPos.lon
+              this.start = true;
+              this.next = false;
+              this.connected = true;
+              this.timeStart = new Date();
+              this.truck.endTime = null;
+  
+              if (this.truck.startTime == null) {
+                this.truck.startTime = this.timeStart;
               }
-
-              this.locationsProvider.saveLocation(aux);
-
-            }, 2000);
-
-            this.timerInterval = setInterval(() => {
-
-              this.timer++;
-
-            }, 1000);
-
-            this.emitInterval = setInterval(() => {
-              this.realTimeProvider.emitMove(this.truck);
-            }, 1000);
-
-            this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {
-              this.nextClient = client[0];
-            });
-          })
-        });
-      } else {
-        alert('No clients to serve');
-        this.start = false;
-
-      }
+              this.truckProvider.update(this.truck);
+  
+              this.actualDistance = this.truck.distance;
+  
+              this.locationInterval = setInterval(() => {
+  
+                let aux: Location = {
+                  truckId: this.truckId,
+                  lat: this.actualPos.lat,
+                  lon: this.actualPos.lon
+                }
+  
+                this.locationsProvider.saveLocation(aux);
+  
+              }, 2000);
+  
+              this.timerInterval = setInterval(() => {
+  
+                this.timer++;
+  
+              }, 1000);
+  
+              this.emitInterval = setInterval(() => {
+                this.realTimeProvider.emitMove(this.truck);
+              }, 1000);
+  
+              this.nextClientProvider.getNextClient(this.clientsToServe[0].id).subscribe(client => {
+                this.nextClient = client[0];
+              });
+              this.cleanMap();
+              this.printAllPoints();
+               this.printServedClients();
+          });
+        } else {
+          alert('No clients to serve');
+          this.start = false;
+          this.cleanMap();
+          this.printAllPoints();
+          this.printServedClients();
+        }
+        resolve();
+      })
     })
   }
 
@@ -306,37 +278,42 @@ export class HomePage {
     this.printAllPoints();
 
     new Promise((resolve) => {
-      this.generatePointsFromJson(this.truckId, resolve);
-    }).then(() => {
+      this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c=>{
 
-      if (!!this.clientsToServe[1]) {
-        new Promise((resolve) => {
-          this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {
-            this.nextClient = client[0];
-            resolve();
-          });
-        }).then(() => {
-          let waypointsaux = [{ lat: this.clientsToServe[0].lat, lon: this.clientsToServe[0].lon },
-          { lat: this.nextClient.lat, lon: this.nextClient.lon }];
+        this.clientsToServe = c;
+        
+        if(c.length > 0) {
           new Promise((resolve) => {
-            this.GetPointsBetweenWaypoints(waypointsaux, resolve);
+            this.clientsProvider.getClient(this.clientsToServe[0].id).subscribe(cli => {
+              this.nextClient = cli[0];
+              resolve();
+            })
           }).then(() => {
-            this.map.panTo(new L.latLng(this.actualPos.lat, this.actualPos.lon));
-            this.nextClient.serving = true;
-            this.clientsProvider.updateClient(this.nextClient);
-            this.moveMarker();
+
+            //console.log(this.truck)
+
+            //OJOCUIDAO
+            let waypointsaux = [{ lat: this.actualPos.lat, lon: this.actualPos.lon },
+              { lat: this.nextClient.lat, lon: this.nextClient.lon }];
+            new Promise((resolve) => {
+              this.GetPointsBetweenWaypoints(waypointsaux, resolve);
+            }).then(() => {
+              this.map.panTo(new L.latLng(this.actualPos.lat, this.actualPos.lon));
+              this.nextClient.serving = true;
+              this.clientsProvider.updateClient(this.nextClient);
+              this.moveMarker();
+            })
           })
-        })
-      } else {
-        this.end = false;
-      }
-    })
+        }else {
+          this.end = false;
+        }
+      })
+    });
   }
 
   ///////////////////////////////////////////////////////////
   /////////////////////// SERVING BUTTON ///////////////////
   ///////////////////////////////////////////////////////////
-
 
   public startService() {
 
@@ -355,9 +332,7 @@ export class HomePage {
   ///////////////////////////////////////////////////////////
 
   public endService() {
-
-    this.printAllPoints();
-
+    
     this.nextClient.served = true;
     new Promise((resolve) => {
       this.clientsProvider.updateClient(this.nextClient);
@@ -371,7 +346,8 @@ export class HomePage {
       setTimeout(() => {
         new Promise((resolve) => {
           this.clientsServedProvider.saveClientInfo(this.service);
-          this.generatePointsFromJson(this.truckId, resolve);
+          this.printAllPoints();
+          resolve();
         }).then(() => {
 
           let auxMarker = new L.marker(new L.latLng(this.actualPos.lat, this.actualPos.lon), {
@@ -386,28 +362,27 @@ export class HomePage {
           this.truck.clientsServed++;
           this.truckProvider.update(this.truck);
 
-          if (this.clientsToServe.length == 1) {
-            new Promise((resolve) => {
-              this.generatePointsFromJson(this.truckId, resolve);
-            }).then(() => {
-              this.cleanMap();
-              this.printServedClients();
-              this.printAllPoints();
-              this.end = false;
+          new Promise((resolve) => {
+            this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c=>{
+              if(c.length==0){
+                this.printAllPoints();
+                this.end=false;
+              }else {
+                new Promise((resolve) => {
+                  this.nextClientProvider.getNextClient(this.clientsToServe[0].id).subscribe(client => {
+                    this.nextClient = client[0];
+                    resolve();
+                  })
+                }).then(() => {
+                  this.next = false;
+                });
+              }
             })
-          } else {
-            new Promise((resolve) => {
-              this.nextClientProvider.getNextClient(this.clientsToServe[1].id).subscribe(client => {
-                this.nextClient = client[0];
-                resolve();
-              })
-            }).then(() => {
-              this.next = false;
-            });
-          }
+            resolve();
+          })
         });
-      }, 300);
-    })
+      }, 400);
+    }) 
   }
 
   ///////////////////////////////////////////////////////////
@@ -415,6 +390,10 @@ export class HomePage {
   ///////////////////////////////////////////////////////////
 
   public endSimulation() {
+              
+    this.cleanMap();
+    this.printServedClients();
+    this.printAllPoints();
 
     clearInterval(this.locationInterval);
     clearInterval(this.timerInterval);
@@ -436,17 +415,20 @@ export class HomePage {
   ///////////////////////////////////////////////////////////
 
   public cleanMap() {
-    if (this.markers != null) {
-      for (var i = 0; i < this.markers.length; i++) {
-        this.map.removeLayer(this.markers[i]);
-      }
+
+    if (!!this.controllers) {
+      this.controllers.forEach(c => {
+        this.map.removeControl(c);
+      });
     }
 
-    if (this.controllers != null) {
-      for (var j = 0; j < this.controllers.length; j++) {
-        this.map.removeControl(this.controllers[j]);
-      }
+    if (!!this.markers) {
+      this.markers.forEach(m => {
+        this.map.removeLayer(m);
+      });
     }
+    this.markers=[];
+    this.controllers=[];
   }
 
   public moveMarker() {
@@ -476,7 +458,6 @@ export class HomePage {
           [this.actualPos.lat, this.actualPos.lon]
         ));
 
-        //UPDATE
         this.truck.distance = this.actualDistance;
         // this.truckProvider.update(this.truck);
 
@@ -527,12 +508,15 @@ export class HomePage {
       }
     }).addTo(this.map);
 
+    this.controllers.push(control);
+
     if (calculate === true) {
       control.on('routeselected', (e) => {
-        this.totalDistance = e.route.summary.totalDistance;
+        this.totalDistance = Math.trunc(e.route.summary.totalDistance);
+        this.timeEstimation = Math.trunc(Math.trunc(e.route.summary.totalTime)/60);
       });
     }
-    this.controllers.push(control);
+    
   }
 
   public GetPointsBetweenWaypoints(waypoints, resolve?) {
@@ -560,15 +544,15 @@ export class HomePage {
   }
 
   public printAllPoints() {
+    
     this.clientsProvider.getClientsByTruckId(this.truckId).subscribe(cli => {
       this.clients = cli;
-      console.log(this.clients);
-      const firstPoint: Client = new Client();
-      firstPoint.lat = this.actualPos.lat;
-      firstPoint.lon = this.actualPos.lon;
-      this.clients.unshift(firstPoint);
+      const start: Client = new Client();
+      start.lat=this.truck.startLat;
+      start.lon=this.truck.startLon;
+      this.clients.unshift(start);
       this.createControl(this.clients, true);
-      this.clients.shift();
+  
     })
   }
 

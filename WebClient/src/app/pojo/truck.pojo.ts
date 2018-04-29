@@ -6,5 +6,6 @@ export class Truck {
     public clientsServed: number;
     public lastLat: number;
     public lastLon: number;
-
+    public startLat: number;
+    public startLon: number;
 }

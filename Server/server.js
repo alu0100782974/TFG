@@ -29,7 +29,9 @@ var trucksSchema = new mongoose.Schema({
   distance: Number,
   clientsServed: Number,
   lastLat: Number,
-  lastLon: Number
+  lastLon: Number,
+  startLat: Number,
+  startLon: Number
 })
 var Truck = mongoose.model('Truck', trucksSchema);
 
@@ -188,7 +190,9 @@ app.put('/trucks', (request, response) => {
       distance: request.body.distance,
       clientsServed: request.body.clientsServed,
       lastLat: request.body.lastLat,
-      lastLon: request.body.lastLon
+      lastLon: request.body.lastLon,
+	  startLat: request.body.startLat,
+	  startLon: request.body.startLon
     },
     { upsert: true }, (err, doc) => {
       if (err) throw err;

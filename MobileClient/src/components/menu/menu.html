@@ -48,15 +48,17 @@
   <p-scrollPanel [style]="{height: '200px'}">
     <table class="table" border="1">
       <thead>
+        <th>Order</th>
         <th>ClientId</th>
         <th>Latitude</th>
         <th>Longitude</th>
       </thead>
       <tbody>
-        <tr *ngFor="let l of clientsToAttend ">
-          <td>{{ l.id }}</td>
-          <td>{{ l.lat }}</td>
-          <td>{{ l.lon }}</td>
+        <tr *ngFor="let c of clientsToServe ">
+          <td>{{ c.order }}</td>
+          <td>{{ c.id }}</td>
+          <td>{{ c.lat }}</td>
+          <td>{{ c.lon }}</td>
         </tr>
       </tbody>
     </table>

@@ -5,7 +5,7 @@ import { LocationsProvider } from '../../providers/locations/locations';
 import { Location } from '../../pojo/locationPojo';
 import { Client } from '../../pojo/clientPojo';
 import { ClientsProvider } from '../../providers/clients/clients';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the MenuComponent component.‽
@@ -20,7 +20,7 @@ import { NavController, NavParams } from 'ionic-angular';
 export class MenuComponent implements OnInit {
   public services: Service[] = [];
   public locations: Location[] = [];
-  public clientsToAttend: Client[] = [];
+  public clientsToServe: Client[] = [];
   public truckId: number;
 
   public display = false;
@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
     this.display3 = !this.display3;
 
     this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c => {
-      this.clientsToAttend = c;
+      this.clientsToServe = c;
     })
   }
 

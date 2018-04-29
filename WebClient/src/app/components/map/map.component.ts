@@ -93,6 +93,13 @@ export class MapComponent implements OnInit {
 
     this.clientsService.getClientsByTruckId(truckId).subscribe(clients => {
 
+      this.markers.push(new L.marker(new L.latLng(28.4091675, -16.5616061), {
+        icon: flagIcon,
+        zIndexOffset: 999999
+      }).addTo(this.map));
+
+      this.waypoints.push({ lat: 28.4091675, lon: -16.5616061 });
+
       clients.forEach(c => {
         this.waypoints.push({ lat: c.lat, lon: c.lon });
         if (c.served === true) {
@@ -180,6 +187,11 @@ export class MapComponent implements OnInit {
   }
 
   public getSelectedTruckId(): number {
-    return this.selectedTruck.id;
+    if(!!this.selectedTruck){
+      return this.selectedTruck.id;
+    }else{
+      console.log('eee');
+      return null;
+    }
   }
 }

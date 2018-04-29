@@ -17,11 +17,14 @@
       </div>
       <button id="end-button" [disabled]="end" (click)="endSimulation()">End Route</button>
       <div class="info-wrapper">
-        <span> Start: {{ timeStart | date: 'mediumTime' }}</span>
-        <!-- <span> Finish: {{ timeEnd | date: 'mediumTime' }}</span> -->
-        <span> Crono: {{ timer }}s</span>
+        
+        <span> Time spent: {{ timer }} s</span>
+        <span> Estimated time: {{ timeEstimation }} min</span>
         <span> Truck distance: {{ actualDistance }} m</span>
-        <span> Route distance: {{ totalDistance }} m</span>
+        <span> Estimated distance: {{ totalDistance }} m</span>
+        <span> Start: {{ timeStart | date: 'mediumTime' }}</span>
+        <!-- <span> Finish: {{ !!timeEnd ? (timeEnd| date: 'mediumTime') : --- }}</span>  -->
+        <span> Finish: {{ !!timeEnd ? (timeEnd | date: 'mediumTime') : '---' }}</span> 
 
       </div>
     </div>
