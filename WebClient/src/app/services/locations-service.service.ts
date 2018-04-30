@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import { Location } from '../pojo/location.pojo';
+import { environment } from '../../environments/environment';
 /*
   Generated class for the LocationsProvider provider.
 
@@ -17,15 +18,7 @@ export class LocationsService {
   }
 
   public getLocations(truckId: Number): Observable<Location[]> {
-    return this.http.get(`${this.urlBackend}/locations?truckId=${truckId}`).map(res => res.json());
-  }
-
-  /* public saveLocation(location: Location): void {
-    this.http.post(`${this.urlBackend}/locations`, location).subscribe();
-  } */
-
-  public setUrlBackend(server: string): void {
-    this.urlBackend = server;
+    return this.http.get(`${environment.backendUrl}/locations?truckId=${truckId}`).map(res => res.json());
   }
 
 }

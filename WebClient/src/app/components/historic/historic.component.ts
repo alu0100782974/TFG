@@ -38,8 +38,6 @@ export class HistoricComponent implements OnInit {
   ];
 
   constructor(private trucksService: TrucksService, private servicesService: ServicesSerivce) {
-    this.trucksService.setUrlBackend('http://localhost:3001');
-    this.servicesService.setUrlBackend('http://localhost:3001');
   }
 
   ngOnInit() {

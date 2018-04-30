@@ -25,8 +25,6 @@ export class SolutionsComponent implements OnInit {
   selectedClient: Client;
 
   constructor(private trucksService: TrucksService, private clientsService: ClientsService) {
-    this.trucksService.setUrlBackend('http://localhost:3001');
-    this.clientsService.setUrlBackend('http://localhost:3001');
   }
 
   ngOnInit() {

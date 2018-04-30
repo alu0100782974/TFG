@@ -37,10 +37,6 @@ export class MapComponent implements OnInit {
     private clientsService: ClientsService,
     private realTimeService: RealTimeService) {
     this.realTimeService.setMapComponent(this);
-    this.realTimeService.start('http://localhost:8181');
-    this.locationsService.setUrlBackend('http://localhost:3001');
-    this.trucksService.setUrlBackend('http://localhost:3001');
-    this.clientsService.setUrlBackend('http://localhost:3001');
   }
 
   ngOnInit(): void {
@@ -56,7 +52,8 @@ export class MapComponent implements OnInit {
     });
     this.markersArray = [];
     this.trucksService.getTruck(e.value.id).subscribe(res => {
-      this.markersArray.push([e.value.id, L.marker([res[0].lastLat, res[0].lastLon], { icon: truckIcon, zIndexOffset: 999999 }).addTo(this.map)]);
+      this.markersArray
+      .push([e.value.id, L.marker([res[0].lastLat, res[0].lastLon], { icon: truckIcon, zIndexOffset: 999999 }).addTo(this.map)]);
     });
     this.control = e.value.id;
     this.generateWayPointsFromRoute(e.value.id);
@@ -187,9 +184,9 @@ export class MapComponent implements OnInit {
   }
 
   public getSelectedTruckId(): number {
-    if(!!this.selectedTruck){
+    if (!!this.selectedTruck) {
       return this.selectedTruck.id;
-    }else{
+    } else {
       console.log('eee');
       return null;
     }

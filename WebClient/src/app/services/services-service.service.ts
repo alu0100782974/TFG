@@ -3,6 +3,7 @@ import { Service } from '../pojo/service.pojo';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ServicesSerivce {
@@ -12,10 +13,7 @@ export class ServicesSerivce {
   constructor(public http: Http) { }
 
   public getClientsServed(truckId: number): Observable<Service[]> {
-    return this.http.get(`${this.urlBackend}/services?truckId=${truckId}`).map(res => res.json());
+    return this.http.get(`${environment.backendUrl}/services?truckId=${truckId}`).map(res => res.json());
   }
 
-  public setUrlBackend(server: string): void {
-    this.urlBackend = server;
-  }
 }

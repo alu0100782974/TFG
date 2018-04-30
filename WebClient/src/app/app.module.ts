@@ -23,6 +23,7 @@ import { TrucksService } from './services/trucks-service.service';
 import { ClientsService } from './services/clients-service.service';
 import { RealTimeService } from './services/real-time-service.service';
 import { ServicesSerivce } from './services/services-service.service';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ServicesSerivce } from './services/services-service.service';
     DialogModule,
     ButtonModule,
     DropdownModule,
-    SpinnerModule
+    SpinnerModule,
+    ChartModule
   ],
   providers: [LocationsService, TrucksService, ClientsService, RealTimeService, ServicesSerivce],
   bootstrap: [AppComponent]

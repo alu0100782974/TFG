@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import * as io from 'socket.io-client';
-import { Truck } from '../pojo/truck.pojo';
 import { MapComponent } from '../components/map/map.component';
+import { Truck } from '../pojo/truck.pojo';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
@@ -12,10 +12,8 @@ export class RealTimeService {
   private mapComponent: MapComponent;
   private socket: SocketIOClient.Socket;
 
-  constructor() { }
-
-  public start(urlBackend: string): void {
-    this.socket = io.connect(urlBackend);
+  constructor() {
+    this.socket = io.connect(environment.realTimeUrl);
     this.socket.on('connect', () => {
       this.recieveMove();
       this.recieveServed();
@@ -36,7 +34,7 @@ export class RealTimeService {
     this.socket.on('served', (data) => {
       if (this.mapComponent.getSelectedTruckId() === data[2]) {
         this.mapComponent.setServedMarker(data);
-      }else if(this.mapComponent.getSelectedTruckId() === null){
+      } else if (this.mapComponent.getSelectedTruckId() === null) {
         this.mapComponent.setServedMarker(data);
       }
     });
