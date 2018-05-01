@@ -34,5 +34,4 @@ export class ClientsService {
   public updateClient(client: Client) {
     this.http.put(`${environment.backendUrl}/clients`, client).subscribe();
   }
-
 }

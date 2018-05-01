@@ -1,0 +1,22 @@
+FROM mongo
+
+MAINTAINER Angel Rguez
+
+RUN mkdir /server
+
+RUN apt-get update \
+    && apt-get install -y curl \
+    && curl -sL https://deb.nodesource.com/setup_5.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh \
+    && apt-get install -y nodejs
+
+COPY package.json /server
+RUN cd /server && npm install
+
+COPY init.js /
+COPY server.js /server
+COPY run.sh /
+
+EXPOSE 3001 8181
+
+ENTRYPOINT /run.sh

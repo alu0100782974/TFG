@@ -1,2 +1,9 @@
+
+
+<!--  <button (click)="lmao()">Cambio</button>  -->
+
+
 <h1>Time percentage</h1>
-<p-chart #graph type="bar" (reinit)="reinitData($event)" [data]="data"></p-chart>
+<p-chart #graph type="bar" (reinit)="reinitData($event)" [data]="data" ></p-chart>
+<h1>Clients served/time by truck</h1>
+<p-chart #graph2 type="line" [data]="data2" (reinit)="reinitData($event)" ></p-chart> 

@@ -16,4 +16,8 @@ export class ServicesSerivce {
     return this.http.get(`${environment.backendUrl}/services?truckId=${truckId}`).map(res => res.json());
   }
 
+  public getAllServices(): Observable<Service[]> {
+    return this.http.get(`${environment.backendUrl}/services`).map(res => res.json());
+  }
+
 }
