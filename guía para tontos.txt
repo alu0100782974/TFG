@@ -1,3 +1,0 @@
-docker run --name tfg -d -p 8181:8181 -p 3001:3001 tfgi
-docker exec -dit tfg ./run.sh
-docker exec -dit tfg node /server/server.js
