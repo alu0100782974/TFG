@@ -24,6 +24,7 @@ import { ClientsService } from './services/clients-service.service';
 import { RealTimeService } from './services/real-time-service.service';
 import { ServicesSerivce } from './services/services-service.service';
 import { ChartModule } from 'primeng/chart';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ChartModule } from 'primeng/chart';
     ButtonModule,
     DropdownModule,
     SpinnerModule,
-    ChartModule
+    ChartModule,
+    TabViewModule
   ],
   providers: [LocationsService, TrucksService, ClientsService, RealTimeService, ServicesSerivce],
   bootstrap: [AppComponent]

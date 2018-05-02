@@ -1,9 +1,12 @@
 <!--  <button (click)="lmao()">Cambio</button>  -->
-
-
-<h1>Time percentage</h1>
-<p-chart #graph type="bar" [data]="data"></p-chart>
-<h1>Clients served/time by truck</h1>
-<p-chart #graph2 type="line" [data]="data2" ></p-chart>
-<h1>Distance/Time by Truck</h1>
-<p-chart #graph3 type="line" [data]="data3" ></p-chart>
+<p-tabView>
+    <p-tabPanel header="Time percentage">
+        <p-chart #graph type="bar" [data]="data"></p-chart>
+    </p-tabPanel>
+    <p-tabPanel header="Clients served/time by truck">
+        <p-chart #graph2 type="line" [data]="data2" ></p-chart>
+    </p-tabPanel>
+    <p-tabPanel header="Distance/Time by Truck">
+        <p-chart #graph3 type="line" [data]="data3" ></p-chart>
+    </p-tabPanel>
+</p-tabView>

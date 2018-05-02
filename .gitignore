@@ -3,3 +3,5 @@ Server/node_modules/*
 MobileClient/node_modules/*
 MobileClient/package-lock.json
 WebClient/package-lock.json
+WebClient/dist/*
+MobileClient/www/build/*
