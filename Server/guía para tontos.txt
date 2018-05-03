@@ -1,0 +1,7 @@
+docker run --name tfg -d -p 8181:8181 -p 3001:3001 tfgi
+docker exec -dit tfg ./run.sh
+docker exec -dit tfg node /server/server.js
+
+//trick
+
+docker run -d  --name mongodb  -p 27017:27017 -e MONGODB_USERNAME=angel -e MONGODB_PASSWORD=angel -e MONGODB_DBNAME=tfg frodenas/mongodb

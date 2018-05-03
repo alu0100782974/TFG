@@ -42,6 +42,7 @@ import { TabViewModule } from 'primeng/tabview';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
+      { path: '', component: MapComponent },
       { path: 'route', component: SolutionsComponent },
       { path: 'map', component: MapComponent },
       { path: 'historic', component: HistoricComponent },

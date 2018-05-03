@@ -1,12 +1,47 @@
 <!--  <button (click)="lmao()">Cambio</button>  -->
-<p-tabView>
+
+<p-tabView (onChange)="fillAllData()">
     <p-tabPanel header="Time percentage">
+
+        <table style="align-content: center; transform:scale(1.2)">
+            <tr>
+                <td>x-Axis:</td>
+                <td>total service time and total displacement time by truck</td>
+            </tr>
+            <tr>
+                <td>y-Axis:</td>
+                <td>percentage over 100</td>
+            </tr>
+        </table>
+
         <p-chart #graph type="bar" [data]="data"></p-chart>
     </p-tabPanel>
     <p-tabPanel header="Clients served/time by truck">
-        <p-chart #graph2 type="line" [data]="data2" ></p-chart>
+
+        <table style="align-content: center; transform:scale(1.2)">
+            <tr>
+                <td>x-Axis:</td>
+                <td>Number of clients served</td>
+            </tr>
+            <tr>
+                <td>y-Axis:</td>
+                <td>Time spent in seconds</td>
+            </tr>
+        </table>
+
+        <p-chart #graph2 type="line" [data]="data2"></p-chart>
     </p-tabPanel>
     <p-tabPanel header="Distance/Time by Truck">
-        <p-chart #graph3 type="line" [data]="data3" ></p-chart>
+        <table style="align-content: center; transform:scale(1.2)">
+            <tr>
+                <td>x-Axis:</td>
+                <td>Time spent in seconds</td>
+            </tr>
+            <tr>
+                <td>y-Axis:</td>
+                <td>Distance traveled in meters</td>
+            </tr>
+        </table>
+        <p-chart #graph3 type="line" [data]="data3"></p-chart>
     </p-tabPanel>
 </p-tabView>

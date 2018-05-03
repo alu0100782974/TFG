@@ -22,9 +22,10 @@ export class StatsComponent implements OnInit {
     graph3: UIChart;
 
     labels: string[] = [];
+    labels3aux: any = [];
 
     data: any = {
-        labels: this.labels,
+        labels: undefined,
         datasets: [
             {
                 label: 'Displacement time(%)',
@@ -59,20 +60,56 @@ export class StatsComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.fillAllData();
+
+    }
+
+    private fillAllData() {
+
+
+        this.data = {
+            labels: this.labels,
+            datasets: [
+                {
+                    label: 'Displacement time(%)',
+                    backgroundColor: '#42A5F5',
+                    borderColor: '#1E88E5',
+                    data: []
+                },
+                {
+                    label: 'Service time(%)',
+                    backgroundColor: '#9CCC65',
+                    borderColor: '#7CB342',
+                    data: []
+                }
+            ]
+        };
+
+        this.data2.labels = [];
+        this.data2.datasets = [];
+
+        this.data3.labels = ['0'];
+        this.data3.datasets = [];
+
         let max = -1;
         const p: any[] = [];
+        this.labels3aux = [];
+
+
 
         this.truckService.getTrucks().subscribe(trucks => {
+
             trucks.forEach(t => {
                 if (!!t.endTime && !!t.startTime) {
-                    this.data3.labels.push(`${(new Date(t.endTime).getTime() - new Date(t.startTime).getTime())} m`);
+                    this.labels3aux.push({ id: t.id, time: (new Date(t.endTime).getTime() - new Date(t.startTime).getTime()) / 1000 });
+                } else if (!!t.startTime) {
+                    this.labels3aux.push({ id: t.id, time: (new Date().getTime() - new Date(t.startTime).getTime()) / 1000 });
                 }
+
                 p.push(new Promise((resolve) => {
                     this.serviceService.getClientsServed(t.id).subscribe(s => {
-                        console.log(2);
                         if (s.length > max) {
                             max = s.length;
-                            console.log('new max=' + max);
                         }
                         resolve();
                     });
@@ -80,6 +117,12 @@ export class StatsComponent implements OnInit {
             });
 
             Promise.all(p).then(() => {
+
+                this.labels3aux.sort((n1, n2) => n1.time > n2.time);
+
+                this.labels3aux.forEach(e => {
+                    this.data3.labels.push(e.time.toString() + ' s');
+                });
 
                 for (let i = 0; i <= max; i++) {
                     this.data2.labels.push(`${i} clients`);
@@ -96,6 +139,7 @@ export class StatsComponent implements OnInit {
         });
 
     }
+
 
     private fillFirstDataset(e: Truck) {
         this.labels.push(`Truck ${e.id}`);
@@ -122,6 +166,7 @@ export class StatsComponent implements OnInit {
 
 
             this.graph.reinit();
+            this.labels = [];
         });
     }
 
@@ -155,15 +200,39 @@ export class StatsComponent implements OnInit {
     }
 
     private fillThirdDataset(e: Truck) {
-        if (!!e.startTime) {
+
+
+
+        let aux: number;
+        let part = 0;
+        const parts: number[] = [0];
+
+        if (!!e.distance) {
+
+            for (let i = 0; i < this.labels3aux.length; i++) {
+                if (this.labels3aux[i].id === e.id) {
+                    aux = i + 1;
+                }
+            }
+
+            part = e.distance / aux;
+
+
+            for (let i = 1; i <= aux; i++) {
+                parts.push(part * i);
+            }
+
             this.data3.datasets.push({
                 label: 'Truck: ' + e.id.toString(),
-                data: [0, e.distance],
+                data: parts,
                 fill: false,
                 borderColor: this.randomColor()
             });
+
         }
+
         this.graph3.reinit();
+        //
     }
 
 
