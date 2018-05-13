@@ -159,7 +159,7 @@ app.get('/services', function (request, response) {
       response.writeHead(200, { 'Content-Type': 'application/json' });
       response.write(JSON.stringify(data));
       response.end();
-  })
+    })
 })
 
 app.post('/services', (request, response) => {
@@ -179,7 +179,7 @@ app.get('/trucks', function (request, response) {
       response.writeHead(200, { 'Content-Type': 'application/json' });
       response.write(JSON.stringify(data));
       response.end();
-  })
+    })
 })
 
 app.put('/trucks', (request, response) => {
@@ -191,8 +191,8 @@ app.put('/trucks', (request, response) => {
       clientsServed: request.body.clientsServed,
       lastLat: request.body.lastLat,
       lastLon: request.body.lastLon,
-	  startLat: request.body.startLat,
-	  startLon: request.body.startLon
+      startLat: request.body.startLat,
+      startLon: request.body.startLon
     },
     { upsert: true }, (err, doc) => {
       if (err) throw err;
@@ -200,7 +200,7 @@ app.put('/trucks', (request, response) => {
       response.write(JSON.stringify(request.body));
       response.end();
     });
-})  
+})
 
 app.listen(3001);
 
