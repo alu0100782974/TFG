@@ -60,6 +60,7 @@ export class HomePage {
   private port2: string;
 
   private backendUrl: string;
+  private osrm: string;
 
   public timeEnd;
   public timeEstimation: any;
@@ -103,6 +104,7 @@ export class HomePage {
 
 
     this.backendUrl = `http://${this.serverId}:${this.port2}`;
+    this.osrm = `http://${this.serverId}:5000/route/v1`
 
     this.truckProvider.setUrlBackend(this.backendUrl);
     this.clientsServedProvider.setUrlBackend(this.backendUrl);
@@ -200,11 +202,11 @@ export class HomePage {
   public startRoute() {
 
     new Promise((resolve) => {
-      this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c=>{
+      this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c => {
 
         this.clientsToServe = c;
-        
-        if(c.length > 0) {
+
+        if (c.length > 0) {
           new Promise((resolve) => {
             this.clientsProvider.getClient(this.clientsToServe[0].id).subscribe(cli => {
               this.nextClient = cli[0];
@@ -212,47 +214,47 @@ export class HomePage {
             })
           }).then(() => {
 
-              this.start = true;
-              this.next = false;
-              this.connected = true;
-              this.timeStart = new Date();
-              this.truck.endTime = null;
-  
-              if (this.truck.startTime == null) {
-                this.truck.startTime = this.timeStart;
+            this.start = true;
+            this.next = false;
+            this.connected = true;
+            this.timeStart = new Date();
+            this.truck.endTime = null;
+
+            if (this.truck.startTime == null) {
+              this.truck.startTime = this.timeStart;
+            }
+            this.truckProvider.update(this.truck);
+
+            this.actualDistance = this.truck.distance;
+
+            this.locationInterval = setInterval(() => {
+
+              let aux: Location = {
+                truckId: this.truckId,
+                lat: this.actualPos.lat,
+                lon: this.actualPos.lon
               }
-              this.truckProvider.update(this.truck);
-  
-              this.actualDistance = this.truck.distance;
-  
-              this.locationInterval = setInterval(() => {
-  
-                let aux: Location = {
-                  truckId: this.truckId,
-                  lat: this.actualPos.lat,
-                  lon: this.actualPos.lon
-                }
-  
-                this.locationsProvider.saveLocation(aux);
-  
-              }, 2000);
-  
-              this.timerInterval = setInterval(() => {
-  
-                this.timer++;
-  
-              }, 1000);
-  
-              this.emitInterval = setInterval(() => {
-                this.realTimeProvider.emitMove(this.truck);
-              }, 1000);
-  
-              this.nextClientProvider.getNextClient(this.clientsToServe[0].id).subscribe(client => {
-                this.nextClient = client[0];
-              });
-              this.cleanMap();
-              this.printAllPoints();
-               this.printServedClients();
+
+              this.locationsProvider.saveLocation(aux);
+
+            }, 2000);
+
+            this.timerInterval = setInterval(() => {
+
+              this.timer++;
+
+            }, 1000);
+
+            this.emitInterval = setInterval(() => {
+              this.realTimeProvider.emitMove(this.truck);
+            }, 1000);
+
+            this.nextClientProvider.getNextClient(this.clientsToServe[0].id).subscribe(client => {
+              this.nextClient = client[0];
+            });
+            this.cleanMap();
+            this.printAllPoints();
+            this.printServedClients();
           });
         } else {
           alert('No clients to serve');
@@ -278,11 +280,11 @@ export class HomePage {
     this.printAllPoints();
 
     new Promise((resolve) => {
-      this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c=>{
+      this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c => {
 
         this.clientsToServe = c;
-        
-        if(c.length > 0) {
+
+        if (c.length > 0) {
           new Promise((resolve) => {
             this.clientsProvider.getClient(this.clientsToServe[0].id).subscribe(cli => {
               this.nextClient = cli[0];
@@ -294,7 +296,7 @@ export class HomePage {
 
             //OJOCUIDAO
             let waypointsaux = [{ lat: this.actualPos.lat, lon: this.actualPos.lon },
-              { lat: this.nextClient.lat, lon: this.nextClient.lon }];
+            { lat: this.nextClient.lat, lon: this.nextClient.lon }];
             new Promise((resolve) => {
               this.GetPointsBetweenWaypoints(waypointsaux, resolve);
             }).then(() => {
@@ -304,7 +306,7 @@ export class HomePage {
               this.moveMarker();
             })
           })
-        }else {
+        } else {
           this.end = false;
         }
       })
@@ -332,7 +334,7 @@ export class HomePage {
   ///////////////////////////////////////////////////////////
 
   public endService() {
-    
+
     this.nextClient.served = true;
     new Promise((resolve) => {
       this.clientsProvider.updateClient(this.nextClient);
@@ -363,11 +365,11 @@ export class HomePage {
           this.truckProvider.update(this.truck);
 
           new Promise((resolve) => {
-            this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c=>{
-              if(c.length==0){
+            this.clientsProvider.getNonServedClientsByTruckId(this.truckId).subscribe(c => {
+              if (c.length == 0) {
                 this.printAllPoints();
-                this.end=false;
-              }else {
+                this.end = false;
+              } else {
                 new Promise((resolve) => {
                   this.nextClientProvider.getNextClient(this.clientsToServe[0].id).subscribe(client => {
                     this.nextClient = client[0];
@@ -382,7 +384,7 @@ export class HomePage {
           })
         });
       }, 400);
-    }) 
+    })
   }
 
   ///////////////////////////////////////////////////////////
@@ -390,7 +392,7 @@ export class HomePage {
   ///////////////////////////////////////////////////////////
 
   public endSimulation() {
-              
+
     this.cleanMap();
     this.printServedClients();
     this.printAllPoints();
@@ -427,8 +429,8 @@ export class HomePage {
         this.map.removeLayer(m);
       });
     }
-    this.markers=[];
-    this.controllers=[];
+    this.markers = [];
+    this.controllers = [];
   }
 
   public moveMarker() {
@@ -505,7 +507,10 @@ export class HomePage {
       addWaypoints: false,
       lineOptions: {
         styles: [{ color: 'blue', opacity: 1, weight: 5 }],
-      }
+      },
+      router: L.Routing.osrmv1({
+        serviceUrl: this.osrm
+      })
     }).addTo(this.map);
 
     this.controllers.push(control);
@@ -513,10 +518,10 @@ export class HomePage {
     if (calculate === true) {
       control.on('routeselected', (e) => {
         this.totalDistance = Math.trunc(e.route.summary.totalDistance);
-        this.timeEstimation = Math.trunc(Math.trunc(e.route.summary.totalTime)/60);
+        this.timeEstimation = Math.trunc(Math.trunc(e.route.summary.totalTime) / 60);
       });
     }
-    
+
   }
 
   public GetPointsBetweenWaypoints(waypoints, resolve?) {
@@ -533,7 +538,10 @@ export class HomePage {
       addWaypoints: false,
       lineOptions: {
         styles: [{ color: 'blue', opacity: 1, weight: 5 }],
-      }
+      },
+      router: L.Routing.osrmv1({
+        serviceUrl: this.osrm
+      })
     }).addTo(this.map);
 
     control.on('routeselected', (e) => {
@@ -544,15 +552,15 @@ export class HomePage {
   }
 
   public printAllPoints() {
-    
+
     this.clientsProvider.getClientsByTruckId(this.truckId).subscribe(cli => {
       this.clients = cli;
       const start: Client = new Client();
-      start.lat=this.truck.startLat;
-      start.lon=this.truck.startLon;
+      start.lat = this.truck.startLat;
+      start.lon = this.truck.startLon;
       this.clients.unshift(start);
       this.createControl(this.clients, true);
-  
+
     })
   }
 
