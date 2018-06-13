@@ -175,6 +175,7 @@ export class HomePage {
 
   public showMyRoute() {
 
+    alert(this.osrm);
     this.show = true;
     if (this.realTimeProvider.getSocket().connected === true) {
       new Promise((resolve) => {
