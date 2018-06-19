@@ -529,6 +529,7 @@ var HomePage = (function () {
     ///////////////////////////////////////////////////////////
     HomePage.prototype.showMyRoute = function () {
         var _this = this;
+        alert(this.osrm);
         this.show = true;
         if (this.realTimeProvider.getSocket().connected === true) {
             new Promise(function (resolve) {
