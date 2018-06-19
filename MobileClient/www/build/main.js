@@ -529,7 +529,7 @@ var HomePage = (function () {
     ///////////////////////////////////////////////////////////
     HomePage.prototype.showMyRoute = function () {
         var _this = this;
-        alert(this.osrm);
+        //alert(this.osrm);
         this.show = true;
         if (this.realTimeProvider.getSocket().connected === true) {
             new Promise(function (resolve) {
@@ -862,16 +862,22 @@ var HomePage = (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('map'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"])
     ], HomePage.prototype, "mapContainer", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-home',template:/*ion-inline-start:"C:\Users\Ángel\Desktop\TFG\MobileClient\src\pages\home\home.html"*/'<ion-content>\n\n  <div class="buttons-wrapper">\n\n\n\n    <div *ngIf="!connected" class="connection-buttons">\n\n      <button id="connect-button" [disabled]="connect" (click)="connectToServer()">Connect</button>\n\n      <div>\n\n        <button [disabled]="show" (click)="showMyRoute()">Show my route</button>\n\n        <button [disabled]="start" (click)="startRoute()">Start Route</button>\n\n      </div>\n\n    </div>\n\n\n\n    <div *ngIf="!!connected" class="menu-buttons">\n\n      <div>\n\n        <button [disabled]="next" (click)="goToNextClient()">To next client</button>\n\n        <button [disabled]="serve" (click)="startService()">Serve</button>\n\n        <button [disabled]="served" (click)="endService()">Client Served</button>\n\n      </div>\n\n      <button id="end-button" [disabled]="end" (click)="endSimulation()">End Route</button>\n\n      <div class="info-wrapper">\n\n        \n\n        <span> Time spent: {{ timer }} s</span>\n\n        <span> Estimated time: {{ timeEstimation }} min</span>\n\n        <span> Truck distance: {{ actualDistance }} m</span>\n\n        <span> Estimated distance: {{ totalDistance }} m</span>\n\n        <span> Start: {{ timeStart | date: \'mediumTime\' }}</span>\n\n        <!-- <span> Finish: {{ !!timeEnd ? (timeEnd| date: \'mediumTime\') : --- }}</span>  -->\n\n        <span> Finish: {{ !!timeEnd ? (timeEnd | date: \'mediumTime\') : \'---\' }}</span> \n\n\n\n      </div>\n\n    </div>\n\n\n\n  </div>\n\n  <div id="map">\n\n    <next-client [nextClient]="nextClient" *ngIf="!!connected"></next-client>\n\n  </div>\n\n\n\n  <div *ngIf="!!connected">\n\n    <menu></menu>\n\n  </div>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Ángel\Desktop\TFG\MobileClient\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__providers_clients_served_clients_served__["a" /* ServicesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_clients_served_clients_served__["a" /* ServicesProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_7__providers_locations_locations__["a" /* LocationsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_locations_locations__["a" /* LocationsProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__providers_nextclient_nextclient__["a" /* NextClientProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_nextclient_nextclient__["a" /* NextClientProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_9__providers_trucks_trucks__["a" /* TrucksProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_trucks_trucks__["a" /* TrucksProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_11__providers_clients_clients__["a" /* ClientsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__providers_clients_clients__["a" /* ClientsProvider */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_12__providers_real_time_real_time__["a" /* RealTimeProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__providers_real_time_real_time__["a" /* RealTimeProvider */]) === "function" && _j || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_clients_served_clients_served__["a" /* ServicesProvider */],
+            __WEBPACK_IMPORTED_MODULE_7__providers_locations_locations__["a" /* LocationsProvider */],
+            __WEBPACK_IMPORTED_MODULE_8__providers_nextclient_nextclient__["a" /* NextClientProvider */],
+            __WEBPACK_IMPORTED_MODULE_9__providers_trucks_trucks__["a" /* TrucksProvider */],
+            __WEBPACK_IMPORTED_MODULE_11__providers_clients_clients__["a" /* ClientsProvider */],
+            __WEBPACK_IMPORTED_MODULE_12__providers_real_time_real_time__["a" /* RealTimeProvider */]])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }());
 
 //# sourceMappingURL=home.js.map
